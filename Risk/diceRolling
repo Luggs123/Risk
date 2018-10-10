@@ -1,0 +1,97 @@
+#include <iostream>
+#include <string>
+#include <iomanip>
+
+using namespace std;
+
+class dice {
+
+public:
+	string name;
+	dice(string nam) {
+		name = nam;
+	};
+	int totalRolled=0;
+	int currentResult[3] = {0,0,0};
+	int diceStats[7] = {0,0,0,0,0,0,0};
+	void getPercentage() {
+		cout << fixed << setprecision(2);
+		cout << "Percentage for " << name <<":"<<endl;
+		for (int i = 1; i <= 6; i++) {
+			double temp = ((double)diceStats[i] / (double)totalRolled) * 100;
+			cout << i << ": " << temp << "%" << endl;
+		}
+
+	};
+	void roll(int num)
+	{
+		for (int i = 0; i < 3; i++) currentResult[i] = 0;
+		cout << "result:" << endl;
+		for (int i = 0; i < num; i++) {
+			int temp = (rand() % 6) + 1;
+			cout << temp <<" ";
+			currentResult[i] = temp;
+			diceStats[temp] += 1;
+		}
+		cout << endl;
+	};
+	void game() {
+		cout << "Hello player " << name << ", how many dice you want to roll ? (from 1 to 3)" << endl;
+		int numOfdice;
+		cin >> numOfdice; cout << endl;
+		if ((numOfdice>=1)&&(numOfdice<=3))
+		{
+			totalRolled += numOfdice;
+			roll(numOfdice);
+			getPercentage();
+		}
+		else cerr << "invalid number of dice entered, back to main menu.\n"; cout << endl;
+
+	}
+};
+
+
+
+int main() {
+	cout << "------------------------------" << endl;
+	cout << "         Dice Rolling         " << endl;
+	cout << "------------------------------" << endl;
+
+
+	dice *player[3];
+	for (int i = 0; i < 3; i++) {
+		cout << "Please enter the name for player" << (i + 1) << "." << endl;
+		string tempName;
+		cin >> tempName;
+		player[i]= new dice(tempName);
+	}
+	cout << endl;
+	
+	int userChoice = 0;
+
+	while (userChoice != 2)
+	{
+		cout << "Please choose one of the following options:" << endl;
+		cout << "1. play." << endl;
+		cout << "2. stop and exit." << endl;
+		cin >> userChoice;
+		cout << endl;
+		switch (userChoice)
+		{
+		case 1: {
+			int playerNum;
+			cout << "Enter the player's number to continue.(1 to 3)" << endl;
+			cin >> playerNum; cout << endl;
+			if ((playerNum >=1)&&(playerNum<=3)) player[playerNum-1]->game();
+			else cerr << "invalid player's number entered, back to main menu.\n" << endl;
+			break;
+		}
+		case 2: break;
+		default:	cerr << "Please enter a valid number (1 or 2).\n"; cout <<endl; break;
+		}
+	}
+
+
+	return 0;
+
+}
