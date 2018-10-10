@@ -1,81 +1,173 @@
 // Assignment 1, Part 1: Map
 // Written by Michael Luger, 40055539
 
+#include <vector>
 #include <string>
+#include "Map.h"
 
-// Defines an individual territory on a map
-class Territory {
-private:
-	// Player* owner;
-	std::string name;
-	int troops;
-	Territory *neighbors [];
+// ================== TERRITORY ==================
+// Constructor
+Territory::Territory(std::string name) {
+	this->name = name;
+}
 
-public:
-	// Constructor
-	Territory(std::string name) {
-		this->name = name;
+// Accessors
+int Territory::getTroops() {
+	return this->troops;
+}
+
+std::string Territory::getName() {
+	return this->name;
+}
+
+std::vector<Territory> Territory::getNeightbors() {
+	return this->neighbors;
+}
+
+//Player* Territory::getOwner() {
+//	return this->owner;
+//}
+
+// Mutators
+void Territory::setTroops(int troops) {
+	this->troops = troops;
+}
+
+void Territory::addNeighbor(Territory t) {
+	this->neighbors.push_back(t);
+}
+
+//void Territory::setOwner(Player* owner) {
+//	this->owner = owner;
+//}
+
+// Service Methods
+bool Territory::equals(Territory t) {
+	return this->name == t.name;
+}
+
+// ================== CONTINENT ==================
+// Constructor
+Continent::Continent(std::string name, int value, std::vector<Territory> territories) {
+	this->name = name;
+	this->value = value;
+	this->territories = territories;
+}
+
+// Accessors
+int Continent::getValue() {
+	return this->value;
+}
+
+std::string Continent::getName() {
+	return this->name;
+}
+
+std::vector<Territory> Continent::getTerritories() {
+	return this->territories;
+}
+
+// Service Methods
+// Determines the connectivity of the continent
+bool Continent::isConnected() {
+	int countTerritories = territories.size;
+	std::vector<bool> isConnected;
+	for (Territory t : territories) {
+		isConnected.push_back(false);
 	}
 
-	// Accessors
-	int Territory::getTroops() {
-		return this->troops;
+	// Traverses the graph the worst-case number of iterations, being the number of territories
+	traverse(countTerritories - 1, isConnected, this->getTerritories().front);
+	for (bool b : isConnected) {
+		if (b == false) {
+			return false;
+		}
 	}
+	return true;
+}
 
-	std::string Territory::getName() {
-		return this->name;
+// Traverses between unvisited neighbors of the active territory recursively
+void Continent::traverse(int iter, std::vector<bool> conn, Territory active) {
+	conn.at(indexTerritory(active)) = true; // Marks active territory as visited
+	// Base case: final iteration, finishes the recursive call
+	if (iter == 0) {
+		return;
 	}
-
-	//Player* Territory::getOwner() {
-	//	return this->owner;
-	//}
-
-	// Mutators
-	void Territory::setTroops(int troops) {
-		this->troops = troops;
+	// Recursive case: traverse all unvisited continent neighbors of the active territory, then finish the call
+	else {
+		for (Territory t : active.getNeightbors) {
+			if (indexTerritory(t) != -1 && conn.at(indexTerritory(t) == false)) {
+				traverse(iter - 1, conn, t);
+			}
+		}
+		return;
 	}
+}
 
-	//void Territory::setOwner(Player* owner) {
-	//	this->owner = owner;
-	//}
-};
-
-// Defines a continent containing several territories on a map
-class Continent {
-private:
-	std::string name;
-	int value;
-	Territory *territories [];
-
-public:
-	// Constructor
-	Continent(std::string name, int value, Territory *territories[]) {
-		this->name = name;
-		this->value = value;
-		// TODO: copy territory array to continent
+// Gets the index of a territory in the territories vector, -1 if not in this continent
+int Continent::indexTerritory(Territory t) {
+	for (int i = 0; i < this->territories.size; i++) {
+		if (this->territories.at(i).equals(t)) {
+			return i;
+		}
 	}
-
-	// Accessors
-	int Continent::getValue() {
-		return this->value;
-	}
-
-	std::string Continent::getName() {
-		return this->name;
-	}
-
-	bool Continent::isUnited() {
-		// TODO: determine whether a continent is united
-	}
-};
+	return -1;
+}
 
 // Defines the entirety of the map
-class Map {
-	Continent *continents []; // TODO: figure out why this is deemed an "incomplete type"
-	Territory *territories [];
-};
+// ================== MAP ==================
+std::vector<Continent> continents;
+std::vector<Territory> territories;
 
-// Defines a Binary Matrix with which connectivity and adjacency of Territories can be determined
-class BinaryMatrix {
-	// TODO: create the BinaryMatrix class
-};
+// Constructor
+Map::Map(std::vector<Continent> continents, std::vector<Territory> territories) {
+	this->continents = continents;
+	this->territories = territories;
+}
+
+// Service Methods
+// Determines the connectivity of the Map
+bool Map::isConnected() {
+	int countTerritories = territories.size;
+	std::vector<bool> isConnected;
+	for (Territory t : territories) {
+		isConnected.push_back(false);
+	}
+
+	// Traverses the graph the worst-case number of iterations, being the number of territories
+	traverse(countTerritories - 1, isConnected, territories.front);
+	for (bool b : isConnected) {
+		if (b == false) {
+			return false;
+		}
+	}
+	return true;
+}
+
+// Traverses between unvisited neighbors of the active territory recursively
+void Map::traverse(int iter, std::vector<bool> conn, Territory active) {
+	conn.at(indexTerritory(active)) = true; // Marks active territory as visited
+	// Base case: final iteration, finishes the recursive call
+	if (iter == 0) {
+		return;
+	}
+	// Recursive case: traverse all unvisited continent neighbors of the active territory, then finish the call
+	else {
+		for (Territory t : active.getNeightbors) {
+			if (conn.at(indexTerritory(t) == false && indexTerritory(t) != -1)) {
+				traverse(iter - 1, conn, t);
+			}
+		}
+		return;
+	}
+}
+
+// Gets the index of a territory in the territories vector, -1 if not placed on the map
+int Map::indexTerritory(Territory t) {
+	for (int i = 0; i < this->territories.size; i++) {
+		if (this->territories.at(i).equals(t)) {
+			return i;
+		}
+	}
+	return -1; 
+}
