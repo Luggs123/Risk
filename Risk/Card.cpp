@@ -4,22 +4,23 @@
 
 #include <iostream>
 #include "Card.h"
-#include "CardType.h"
+
+std::string Card::types[] = {"INFANTRY", "ARTILLERY", "CAVALRY"}; //TODO: global variable bad practice ?!
+
+Card::Card(int val, const std::string &territoryStr) : cardType(val), territory(territoryStr) { }
+
+int Card::getValue() {
+    return this->cardType;
+}
 
 std::string Card::getTerritory()
 {
     return this->territory;
 }
 
-CardType Card::getType()
+std::string Card::getType()
 {
-    return this->type;
-}
-
-Card::Card(CardType cardType, const std::string &territoryStr)
-{
-    this->type = cardType;
-    this->territory = territoryStr;
+    return Card::types[this->cardType];
 }
 
 void Card::displayCard() {

@@ -6,16 +6,17 @@
 #define RISK_DECK_CARD_H
 
 #include <string>
-#include "CardType.h"
 
 class Card {
 private:
-    CardType type;
+    static std::string types[];
+    int cardType;
     std::string territory;
 
 public:
-    Card(CardType cardType, const std::string &territoryStr);
-    CardType getType();
+    Card(int cardType, const std::string &territoryStr);
+    int getValue();
+    std::string getType();
     std::string getTerritory();
     void displayCard();
 };

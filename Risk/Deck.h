@@ -7,12 +7,11 @@
 
 #include <vector>
 #include <string>
-#include <stack>
 #include "Card.h"
 
 class Deck {
 private:
-    std::stack<Card> cards;
+    std::vector<Card> cards;
     int currentSet;
 
 public:
@@ -21,7 +20,7 @@ public:
     void incrementSet();
     int getCurrentSet();
     void displayDeck();
-
+    void placeBackCards(Card card1, Card card2, Card card3);
 };
 
 #endif //RISK_DECK_DECK_H

@@ -17,39 +17,27 @@ int Hand::exchange(unsigned int pos1, unsigned int pos2, unsigned int pos3, Deck
         return 0;
     }
 
-    if (pos1 >= hand.size() || pos2 >= hand.size() || pos3 >= hand.size()) {
+    if (pos1 >= hand.size() || pos2 >= hand.size() || pos3 >= hand.size() || pos1 == pos2 || pos1 == pos3 || pos2 == pos3) {
         cout << "Invalid index." << endl;
         return 0;
     }
 
-    Card card1 = this->hand.at(pos1);
-    Card card2 = this->hand.at(pos2);
-    Card card3 = this->hand.at(pos3);
+    Card card1 = this->hand[pos1];
+    Card card2 = this->hand[pos2];
+    Card card3 = this->hand[pos3];
+
+    unsigned int positions[] = {pos1, pos2, pos3};
+    sort(begin(positions), end(positions), greater<>());
 
     if (isExchangeValid(card1, card2, card3)) {
         currentDeck.incrementSet();
 
-        const int set = currentDeck.getCurrentSet();
-        switch (set) {
-            case 1:
-                return 4;
-            case 2:
-                return 6;
-            case 3:
-                return 8;
-            case 4:
-                return 10;
-            case 5:
-                return  12;
-            case 6:
-                return 15;
-            default:
-                if (set > 6)
-                    return 15 + ((set - 6) * 5);
+        this->hand.erase(this->hand.begin() + positions[0]);
+        this->hand.erase(this->hand.begin() + positions[1]);
+        this->hand.erase(this->hand.begin() + positions[2]);
+        currentDeck.placeBackCards(card1, card2, card3);
 
-                cout << "Invalid set." << endl;
-                return 0;
-        }
+        return currentDeck.getCurrentSet() * 5;
     }
 
     return 0;
@@ -75,10 +63,10 @@ namespace hand_helper_function
 {
     bool isExchangeValid (Card &card1, Card &card2, Card &card3)
     {
-        if (card1.getType() == card2.getType() && card2.getType() == card3.getType())
+        if (card1.getValue() == card2.getValue() && card2.getValue() == card3.getValue())
             return true;
 
-        return card1.getType() != card2.getType() && card2.getType() != card3.getType();
+        return card1.getValue() != card2.getValue() && card2.getValue() != card3.getValue() && card1.getValue() != card3.getValue();
 
     }
 }
