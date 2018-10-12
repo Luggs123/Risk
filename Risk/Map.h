@@ -52,12 +52,13 @@ public:
 
 	// Service Methods
 	bool Continent::isConnected();
-	void Continent::traverse(int iter, std::vector<bool> conn, Territory active);
+	void Continent::traverse(int iter, std::vector<bool>& conn, Territory active);
 	int Continent::indexTerritory(Territory t);
 };
 
 // Defines the entirety of the map
 class Map {
+public:
 	std::vector<Continent> continents;
 	std::vector<Territory> territories;
 
@@ -66,7 +67,7 @@ class Map {
 
 	// Service Methods
 	bool Map::isConnected();
-	void Map::traverse(int iter, std::vector<bool> conn, Territory active);
+	void Map::traverse(int iter, std::vector<bool>& conn, Territory active);
 	int Map::indexTerritory(Territory t);
 };
 #endif
