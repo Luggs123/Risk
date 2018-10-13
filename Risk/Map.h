@@ -13,7 +13,7 @@ private:
 	//Player* owner;
 	std::string name;
 	int troops;
-	std::vector<Territory> neighbors;
+	std::vector<Territory*> neighbors;
 
 public:
 	// Constructor
@@ -22,16 +22,16 @@ public:
 	// Accessors
 	int Territory::getTroops();
 	std::string Territory::getName();
-	std::vector<Territory> Territory::getNeightbors();
+	std::vector<Territory*> Territory::getNeightbors();
 	//Player* Territory::getOwner();
 
 	// Mutators
 	void Territory::setTroops(int troops);
-	void Territory::addNeighbor(Territory t);
+	void Territory::addNeighbor(Territory* t);
 	//void Territory::setOwner(Player* owner);
 
 	// Service Methods
-	bool Territory::equals(Territory t);
+	bool Territory::equals(Territory* t);
 };
 
 // Defines a continent of territories
@@ -39,35 +39,43 @@ class Continent {
 private:
 	std::string name;
 	int value;
-	std::vector<Territory> territories;
+	std::vector<Territory*> territories;
 
 public:
 	// Constructor
-	Continent::Continent(std::string name, int value, std::vector<Territory> territories);
+	Continent::Continent(std::string name, int value, std::vector<Territory*> territories);
+	Continent::Continent(std::string name, int value);
 
 	// Accessors
 	int Continent::getValue();
 	std::string Continent::getName();
-	std::vector<Territory> Continent::getTerritories();
+	std::vector<Territory*> Continent::getTerritories();
+
+	// Mutators
+	void Continent::addTerritory(Territory* t);
 
 	// Service Methods
+	bool Continent::equals(Continent* c);
 	bool Continent::isConnected();
-	void Continent::traverse(int iter, std::vector<bool>& conn, Territory active);
-	int Continent::indexTerritory(Territory t);
+	void Continent::traverse(int iter, std::vector<bool>& conn, Territory* active);
+	int Continent::indexTerritory(Territory* t);
 };
 
 // Defines the entirety of the map
 class Map {
 public:
-	std::vector<Continent> continents;
-	std::vector<Territory> territories;
+	std::vector<Continent*> continents;
+	std::vector<Territory*> territories;
 
 	// Constructor
-	Map::Map(std::vector<Continent> continents, std::vector<Territory> territories);
+	Map::Map(std::vector<Continent*> continents, std::vector<Territory*> territories);
+
+	// Mutators
+	void Map::addContinent(Continent* c);
 
 	// Service Methods
 	bool Map::isConnected();
-	void Map::traverse(int iter, std::vector<bool>& conn, Territory active);
-	int Map::indexTerritory(Territory t);
+	void Map::traverse(int iter, std::vector<bool>& conn, Territory* active);
+	int Map::indexTerritory(Territory* t);
 };
 #endif

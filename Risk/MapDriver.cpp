@@ -21,57 +21,59 @@ int main()
 	Territory* nz = new Territory("New Zealand");
 
 	// Neighbor relations
-	usa->addNeighbor(*canada);
-	usa->addNeighbor(*mexico);
-	mexico->addNeighbor(*usa);
-	canada->addNeighbor(*usa);
+	usa->addNeighbor(canada);
+	usa->addNeighbor(mexico);
+	mexico->addNeighbor(usa);
+	canada->addNeighbor(usa);
 
-	france->addNeighbor(*spain);
-	france->addNeighbor(*germany);
-	france->addNeighbor(*italy);
-	france->addNeighbor(*switzerland);
-	spain->addNeighbor(*france);
-	germany->addNeighbor(*france);
-	germany->addNeighbor(*switzerland);
-	italy->addNeighbor(*france);
-	italy->addNeighbor(*switzerland);
-	switzerland->addNeighbor(*france);
-	switzerland->addNeighbor(*germany);
-	switzerland->addNeighbor(*italy);
+	france->addNeighbor(spain);
+	france->addNeighbor(germany);
+	france->addNeighbor(italy);
+	france->addNeighbor(switzerland);
+	spain->addNeighbor(france);
+	germany->addNeighbor(france);
+	germany->addNeighbor(switzerland);
+	italy->addNeighbor(france);
+	italy->addNeighbor(switzerland);
+	switzerland->addNeighbor(france);
+	switzerland->addNeighbor(germany);
+	switzerland->addNeighbor(italy);
 
 	// Will make the world (but not Oceania) connected
-	//usa->addNeighbor(*australia);
-	//spain->addNeighbor(*nz);
-	//australia->addNeighbor(*usa);
-	//nz->addNeighbor(*spain);
+	usa->addNeighbor(australia);
+	canada->addNeighbor(france);
+	france->addNeighbor(canada);
+	spain->addNeighbor(nz);
+	australia->addNeighbor(usa);
+	nz->addNeighbor(spain);
 
 	// Adding territories to continents
-	std::vector<Territory> naTerritories;
-	naTerritories.push_back(*canada);
-	naTerritories.push_back(*usa);
-	naTerritories.push_back(*mexico);
+	std::vector<Territory*> naTerritories;
+	naTerritories.push_back(canada);
+	naTerritories.push_back(usa);
+	naTerritories.push_back(mexico);
 	Continent* northAmerica = new Continent("North America", 5, naTerritories);
 
-	std::vector<Territory> europeTerritories;
-	europeTerritories.push_back(*france);
-	europeTerritories.push_back(*germany);
-	europeTerritories.push_back(*italy);
-	europeTerritories.push_back(*spain);
-	europeTerritories.push_back(*switzerland);
+	std::vector<Territory*> europeTerritories;
+	europeTerritories.push_back(france);
+	europeTerritories.push_back(germany);
+	europeTerritories.push_back(italy);
+	europeTerritories.push_back(spain);
+	europeTerritories.push_back(switzerland);
 	Continent* europe = new Continent("Europe", 8, europeTerritories);
 
-	std::vector<Territory> oceaniaTerritories;
-	oceaniaTerritories.push_back(*australia);
-	oceaniaTerritories.push_back(*nz);
+	std::vector<Territory*> oceaniaTerritories;
+	oceaniaTerritories.push_back(australia);
+	oceaniaTerritories.push_back(nz);
 	Continent* oceania = new Continent("Oceania", 3, oceaniaTerritories);
 
 	// Adding continents to map
-	std::vector<Continent> continents;
-	continents.push_back(*northAmerica);
-	continents.push_back(*europe);
-	continents.push_back(*oceania);
+	std::vector<Continent*> continents;
+	continents.push_back(northAmerica);
+	continents.push_back(europe);
+	continents.push_back(oceania);
 
-	std::vector<Territory> territories;
+	std::vector<Territory*> territories;
 	territories.reserve(naTerritories.size() + europeTerritories.size() + oceaniaTerritories.size());
 	territories.insert(territories.end(), naTerritories.begin(), naTerritories.end());
 	territories.insert(territories.end(), europeTerritories.begin(), europeTerritories.end());
@@ -90,5 +92,13 @@ int main()
 
 	std::cout << "World" << std::endl;
 	std::cout << "Connected: " << world->isConnected() << std::endl;
+
+	//for (Territory* t : world->territories) {
+	//	std::cout << t->getName() << ": ";
+	//	for (Territory* e : t->getNeightbors()) {
+	//		std::cout << e->getName() << ", ";
+	//	}
+	//	std::cout << std::endl;
+	//}
 }
 
