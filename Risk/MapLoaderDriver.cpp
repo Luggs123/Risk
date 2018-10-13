@@ -14,10 +14,8 @@ int main() {
 	for (Continent* c : worldMap->continents) {
 		std::cout << c->getName() << ": " << std::endl;
 		for (Territory* t : c->getTerritories()) {
-			std::cout << t->getName() << ": ";
-			for (Territory* n : t->getNeightbors()) {
-				std::cout << n->getName() << ", ";
-			}
+			std::cout << t->getName() << ", ";
 		}
+		std::cout << c->isConnected() << std::endl;
 	}
 }

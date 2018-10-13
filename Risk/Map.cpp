@@ -74,9 +74,7 @@ std::vector<Territory*> Continent::getTerritories() {
 
 // Mutators
 void Continent::addTerritory(Territory* t) {
-	if (indexTerritory(t) != -1) {
-		this->territories.push_back(t);
-	}
+	this->territories.push_back(t);
 }
 
 // Service Methods
