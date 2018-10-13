@@ -28,7 +28,6 @@ Continent* parseContinent(std::string line) {
 // Creates the Territories via parsing but does not establish neighborhood
 Territory* createTerritories(std::string line) {
 	std::string delimiter = ",";
-	std::vector<std::string> unparsedNeighbors;
 
 	int delimiterPos = line.find(delimiter);
 	if (delimiterPos == std::string::npos) {
@@ -39,17 +38,10 @@ Territory* createTerritories(std::string line) {
 	line = line.substr(delimiterPos + 1, std::string::npos);
 	delimiterPos = line.find(delimiter);
 
-	// These two steps are just to verify that the file is still valid
-	int xPos = std::stoi(line.substr(0, delimiterPos));
-	line = line.substr(delimiterPos + 1, std::string::npos);
-	delimiterPos = line.find(delimiter);
-	int yPos = std::stoi(line.substr(0, delimiterPos));
-	line = line.substr(delimiterPos + 1, std::string::npos);
-	delimiterPos = line.find(delimiter);
-
 	return new Territory(name);
 }
 
+// Locates a continent from the vector
 Continent* findContinent(std::string name) {
 	for (Continent* c : continents) {
 		if (name == c->getName()) {
@@ -59,6 +51,7 @@ Continent* findContinent(std::string name) {
 	return NULL;
 }
 
+// Locates a territory from the vector
 Territory* findTerritory(std::string name) {
 	for (Territory* t : territories) {
 		if (name == t->getName()) {
@@ -68,6 +61,7 @@ Territory* findTerritory(std::string name) {
 	return NULL;
 }
 
+// Given the existence of a given territory, does a second apss through to assign it to a continent and its neighbors
 void assignTerritory(std::string line) {
 	std::string delimiter = ",";
 	int delimiterPos = line.find(delimiter);
@@ -113,38 +107,35 @@ Map* getMap(std::string map) {
 	std::vector<std::string> repeatTerritories;
 
 	while (std::getline(mapFile, nextLine)) {
+		// Skip empty lines because getline doesn't like those
+		if (nextLine.compare("") == 0) {
+			continue;
+		}
 		// Determine whether currently looking at settings, continents, or territories (matching with optional whitespace)
-		//std::cout << nextLine << std::endl;
 		if (nextLine.compare("[Map]") == 0) {
-			std::cout << 1;
 			mode = 1;
 			continue;
 		}
 		else if (nextLine.compare("[Continents]") == 0) {
-			std::cout << 2;
 			mode = 2;
 			continue;
 		}
 		else if (nextLine.compare("[Territories]") == 0) {
-			std::cout << 3;
 			mode = 3;
 			continue;
 		}
 
 		// ignore settings
 		if (mode == 1) {
-			std::cout << 1;
 			continue;
 		}
 		// add new continents
 		else if (mode == 2) {
-			std::cout << 2;
 			continents.push_back(parseContinent(nextLine));
 			continue;
 		}
 		// first create territories - neighbors and appropriate continents are done after file is read
 		else if (mode == 3) {
-			std::cout << 3;
 			territories.push_back(createTerritories(nextLine));
 			repeatTerritories.push_back(nextLine);
 		}
@@ -155,6 +146,8 @@ Map* getMap(std::string map) {
 		assignTerritory(line);
 	}
 
-	return new Map(continents, territories);
+	Map* worldMap = new Map(continents, territories);
+
+	return worldMap;
 }
 
