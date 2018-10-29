@@ -7,7 +7,7 @@
 #include "Card.h"
 #include "Deck.h"
 
-int Hand::exchange(unsigned int pos1, unsigned int pos2, unsigned int pos3, Deck &currentDeck)
+int Hand::exchange(unsigned int pos1, unsigned int pos2, unsigned int pos3, Deck &current_deck)
 {
     using namespace std;
     using namespace hand_helper_function;
@@ -29,44 +29,45 @@ int Hand::exchange(unsigned int pos1, unsigned int pos2, unsigned int pos3, Deck
     unsigned int positions[] = {pos1, pos2, pos3};
     sort(begin(positions), end(positions), greater<>());
 
-    if (isExchangeValid(card1, card2, card3)) {
-        currentDeck.incrementSet();
+    if (is_exchange_valid(card1, card2, card3)) {
+        current_deck.increment_set();
 
         this->hand.erase(this->hand.begin() + positions[0]);
         this->hand.erase(this->hand.begin() + positions[1]);
         this->hand.erase(this->hand.begin() + positions[2]);
-        currentDeck.placeBackCards(card1, card2, card3);
+        current_deck.place_back_cards(card1, card2, card3);
 
-        return currentDeck.getCurrentSet() * 5;
+        return current_deck.get_current_set() * 5;
     }
 
     return 0;
 }
 
-void Hand::displayCards() {
+void Hand::display_cards() {
     if (this->hand.empty()) {
         std::cout << "Hand is empty." << std::endl;
     } else {
         std::cout << "Hand: " << std::endl;
         for (Card &card : this->hand) {
-            card.displayCard();
+            card.display_card();
         }
     }
     std::cout << "\n";
 }
 
-void Hand::placeCardInHand(Card &card) {
+void Hand::place_card_in_hand(Card &card) {
     this->hand.push_back(card);
 }
 
 namespace hand_helper_function
 {
-    bool isExchangeValid (Card &card1, Card &card2, Card &card3)
+    bool is_exchange_valid(Card &card1, Card &card2, Card &card3)
     {
-        if (card1.getValue() == card2.getValue() && card2.getValue() == card3.getValue())
+        if (card1.get_value() == card2.get_value() && card2.get_value() == card3.get_value())
             return true;
 
-        return card1.getValue() != card2.getValue() && card2.getValue() != card3.getValue() && card1.getValue() != card3.getValue();
+        return card1.get_value() != card2.get_value() && card2.get_value() != card3.get_value() && card1.get_value() !=
+                                                                                                       card3.get_value();
 
     }
 }

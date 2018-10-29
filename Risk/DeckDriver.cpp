@@ -6,7 +6,7 @@
 #include "Card.h"
 
 namespace test {
-    std::vector<std::string> generateTerritoryVector();
+    std::vector<std::string> generate_territory_vector();
 
 };
 
@@ -15,96 +15,96 @@ int main()
     using namespace std;
 
     // army variable should be in player but for this demo, it'll be stored in the driver
-    int armyNum = 0;
+    int army_num = 0;
 
-    vector<string> territoryList = test::generateTerritoryVector();
+    vector<string> territory_list = test::generate_territory_vector();
 
-    Deck deck(territoryList);
-    Hand myHand;
+    Deck deck(territory_list);
+    Hand my_hand;
 
     cout << "Initial deck content." << endl;
-    deck.displayDeck();
+    deck.display_deck();
 
     cout << "Initial hand content." << endl;
-    myHand.displayCards();
+    my_hand.display_cards();
 
-    cout << "Initial army count: " << armyNum << endl;
+    cout << "Initial army count: " << army_num << endl;
     cout << "\n";
 
     Card card1 = deck.draw();
     cout << "Draw a card." << endl;
-    card1.displayCard();
+    card1.display_card();
     cout << "\n";
 
     cout << "Place card in hand." << endl;
-    myHand.placeCardInHand(card1);
+    my_hand.place_card_in_hand(card1);
     cout << "\n";
 
     cout << "Deck content." << endl;
-    deck.displayDeck();
+    deck.display_deck();
 
     cout << "Hand content." << endl;
-    myHand.displayCards();
+    my_hand.display_cards();
 
     cout << "Attempting to exchange cards in hand." << endl;
-    armyNum += myHand.exchange(0, 1, 2, deck);
+    army_num += my_hand.exchange(0, 1, 2, deck);
 
-    cout << "Current army count: " << armyNum << endl;
+    cout << "Current army count: " << army_num << endl;
     cout << "\n";
 
     Card card2 = deck.draw();
     cout << "Draw a card." << endl;
-    card2.displayCard();
+    card2.display_card();
     cout << "\n";
 
     cout << "Place card in hand." << endl;
-    myHand.placeCardInHand(card2);
+    my_hand.place_card_in_hand(card2);
     cout << "\n";
 
     cout << "Deck content." << endl;
-    deck.displayDeck();
+    deck.display_deck();
 
     cout << "Hand content." << endl;
-    myHand.displayCards();
+    my_hand.display_cards();
 
     cout << "Attempting to exchange cards in hand." << endl;
-    armyNum += myHand.exchange(0, 1, 2, deck);
+    army_num += my_hand.exchange(0, 1, 2, deck);
 
-    cout << "Current army count: " << armyNum << endl;
+    cout << "Current army count: " << army_num << endl;
     cout << "\n";
 
     Card card3 = deck.draw();
     cout << "Draw a card." << endl;
-    card3.displayCard();
+    card3.display_card();
     cout << "\n";
 
     cout << "Place card in hand." << endl;
-    myHand.placeCardInHand(card3);
+    my_hand.place_card_in_hand(card3);
     cout << "\n";
 
     cout << "Deck content." << endl;
-    deck.displayDeck();
+    deck.display_deck();
 
     cout << "Hand content." << endl;
-    myHand.displayCards();
+    my_hand.display_cards();
 
     cout << "Attempting to exchange cards in hand." << endl;
-    armyNum += myHand.exchange(0, 1, 2, deck);
+    army_num += my_hand.exchange(0, 1, 2, deck);
 
-    cout << "Current army count: " << armyNum << endl;
+    cout << "Current army count: " << army_num << endl;
     cout << "\n";
 
     cout << "Deck content." << endl;
-    deck.displayDeck();
+    deck.display_deck();
 
     cout << "Hand content." << endl;
-    myHand.displayCards();
+    my_hand.display_cards();
 }
 
 namespace test {
     using namespace std;
 
-    vector<string> generateTerritoryVector()
+    vector<string> generate_territory_vector()
     {
         vector<string> territories;
 

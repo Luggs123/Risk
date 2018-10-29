@@ -11,7 +11,7 @@
 
 namespace hand_helper_function
 {
-    bool isExchangeValid (Card &card1, Card &card2, Card &card3);
+    bool is_exchange_valid(Card &card1, Card &card2, Card &card3);
 }
 
 class Hand {
@@ -20,9 +20,9 @@ private:
 
 public:
     //TODO: armies are represented as int ??
-    int exchange(unsigned int pos1, unsigned int pos2, unsigned int pos3, Deck &deck);
-    void displayCards();
-    void placeCardInHand(Card &card);
+    int exchange(unsigned int pos1, unsigned int pos2, unsigned int pos3, Deck &current_deck);
+    void display_cards();
+    void place_card_in_hand(Card &card);
 };
 
 #endif //RISK_DECK_HAND_H
