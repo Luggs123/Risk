@@ -6,7 +6,11 @@
 #define RISK_DECK_DECK_H
 
 #include <vector>
-#include <string>
+#include <cmath>
+#include <random>
+#include <algorithm>
+#include <chrono>
+#include <iostream>
 #include "Card.h"
 
 class Deck {

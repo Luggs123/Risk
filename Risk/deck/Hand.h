@@ -5,8 +5,7 @@
 #ifndef RISK_DECK_HAND_H
 #define RISK_DECK_HAND_H
 
-#include <vector>
-#include "Card.h"
+
 #include "Deck.h"
 
 namespace hand_helper_function

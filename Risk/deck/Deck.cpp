@@ -2,14 +2,8 @@
 // Created by Michael Wu on 2018-10-03.
 //
 
-#include <vector>
-#include <cmath>
-#include <random>
-#include <algorithm>
-#include <chrono>
-#include <iostream>
+
 #include "Deck.h"
-#include "Card.h"
 
 Deck::Deck(std::vector<std::string> &territoryList)
 {

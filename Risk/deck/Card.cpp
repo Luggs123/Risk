@@ -2,7 +2,7 @@
 // Created by Michael Wu on 2018-10-03.
 //
 
-#include <iostream>
+
 #include "Card.h"
 
 std::string Card::types[] = {"INFANTRY", "ARTILLERY", "CAVALRY"}; //TODO: global variable bad practice ?!
