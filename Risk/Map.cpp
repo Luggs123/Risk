@@ -3,6 +3,8 @@
 
 #include <vector>
 #include <string>
+#include <queue>
+#include <iostream>
 #include "Map.h"
 
 // ================== TERRITORY ==================
@@ -12,15 +14,15 @@ Territory::Territory(std::string name) {
 }
 
 // Accessors
-int Territory::getTroops() {
+int Territory::get_troops() {
 	return this->troops;
 }
 
-std::string Territory::getName() {
+std::string Territory::get_name() {
 	return this->name;
 }
 
-std::vector<Territory*> Territory::getNeightbors() {
+std::vector<Territory*> Territory::get_neighbors() {
 	return this->neighbors;
 }
 
@@ -29,11 +31,11 @@ std::vector<Territory*> Territory::getNeightbors() {
 //}
 
 // Mutators
-void Territory::setTroops(int troops) {
+void Territory::set_troops(int troops) {
 	this->troops = troops;
 }
 
-void Territory::addNeighbor(Territory* t) {
+void Territory::add_neighbor(Territory* t) {
 	this->neighbors.push_back(t);
 }
 
@@ -60,66 +62,64 @@ Continent::Continent(std::string name, int value) {
 }
 
 // Accessors
-int Continent::getValue() {
+int Continent::get_value() {
 	return this->value;
 }
 
-std::string Continent::getName() {
+std::string Continent::get_name() {
 	return this->name;
 }
 
-std::vector<Territory*> Continent::getTerritories() {
+std::vector<Territory*> Continent::get_territories() {
 	return this->territories;
 }
 
 // Mutators
-void Continent::addTerritory(Territory* t) {
+void Continent::add_territory(Territory* t) {
 	this->territories.push_back(t);
 }
 
 // Service Methods
 bool Continent::equals(Continent* c) {
-	return this->getName() == c->getName();
+	return this->get_name() == c->get_name();
 }
 
-// Determines the connectivity of the continent
-bool Continent::isConnected() {
-	int countTerritories = territories.size();
-	std::vector<bool> isConnected;
-	for (Territory* t : territories) {
-		isConnected.push_back(false);
+bool Continent::is_connected() {
+	bool* visited = new bool[this->get_territories().size()];
+	for (int i = 0; i < this->get_territories().size(); i++) {
+		visited[i] = false;
 	}
+	bfs(territories[0], visited);
 
-	// Traverses the graph the worst-case number of iterations, being the number of territories
-	traverse(countTerritories - 1, isConnected, this->getTerritories().front());
-	for (bool b : isConnected) {
-		if (b == false) {
+	// Check if all nodes were visited.
+	for (int i = 0; i < territories.size(); i++) {
+		if (!visited[i]) {
+			delete[] visited;
 			return false;
 		}
 	}
+	delete[] visited;
 	return true;
 }
 
-// Traverses between unvisited neighbors of the active territory recursively
-void Continent::traverse(int iter, std::vector<bool>& conn, Territory* active) {
-	conn.at(indexTerritory(active)) = true; // Marks active territory as visited
-	// Base case: final iteration, finishes the recursive call
-	if (iter == 0) {
-		return;
-	}
-	// Recursive case: traverse all unvisited continent neighbors of the active territory, then finish the call
-	else {
-		for (Territory* t : active->getNeightbors()) {
-			if (indexTerritory(t) != -1 && conn.at(indexTerritory(t) == false)) {
-				traverse(iter - 1, conn, t);
+void Continent::bfs(Territory* origin, bool* visited) {
+	std::queue<Territory*> q;
+	q.push(origin);
+	while (!q.empty()) {
+		Territory* node = q.front();
+		q.pop();
+		visited[this->index_territory(node)] = true;
+		for (int i = 0; i < node->get_neighbors().size(); i++) {
+			Territory* connection = node->get_neighbors()[i];
+			if (index_territory(connection) != -1 && !visited[this->index_territory(connection)]) {
+				q.push(connection);
 			}
 		}
-		return;
 	}
 }
 
 // Gets the index of a territory in the territories vector, -1 if not in this continent
-int Continent::indexTerritory(Territory* t) {
+int Continent::index_territory(Territory* t) {
 	for (int i = 0; i < this->territories.size(); i++) {
 		if (this->territories.at(i)->equals(t)) {
 			return i;
@@ -140,7 +140,7 @@ Map::Map(std::vector<Continent*> continents, std::vector<Territory*> territories
 }
 
 // Mutators
-void Map::addContinent(Continent* c) {
+void Map::add_continent(Continent* c) {
 	for (Continent* cnt : this->continents) {
 		if (c->equals(cnt)) {
 			return;
@@ -151,43 +151,42 @@ void Map::addContinent(Continent* c) {
 
 // Service Methods
 // Determines the connectivity of the Map
-bool Map::isConnected() {
-	int countTerritories = territories.size();
-	std::vector<bool> isConnected;
-	for (Territory* t : territories) {
-		isConnected.push_back(false);
+bool Map::is_connected() {
+	bool* visited = new bool[this->territories.size()];
+	for (int i = 0; i < this->territories.size(); i++) {
+		visited[i] = false;
 	}
+	bfs(territories[0], visited);
 
-	// Traverses the graph the worst-case number of iterations, being the number of territories
-	Map::traverse(countTerritories - 1, isConnected, territories.front());
-	for (bool b : isConnected) {
-		if (b == false) {
+	// Check if all nodes were visited.
+	for (int i = 0; i < territories.size(); i++) {
+		if (!visited[i]) {
+			delete[] visited;
 			return false;
 		}
 	}
+	delete[] visited;
 	return true;
 }
 
-// Traverses between unvisited neighbors of the active territory recursively
-void Map::traverse(int iter, std::vector<bool>& conn, Territory* active) {
-	conn.at(indexTerritory(active)) = true; // Marks active territory as visited
-	// Base case: final iteration, finishes the recursive call
-	if (iter == 0) {
-		return;
-	}
-	// Recursive case: traverse all unvisited neighbors of the active territory, then finish the call
-	else {
-		for (Territory* t : active->getNeightbors()) {
-			if (conn.at(indexTerritory(t) == false && indexTerritory(t) != -1)) {
-				Map::traverse(iter - 1, conn, t);
+void Map::bfs(Territory* origin, bool* visited) {
+	std::queue<Territory*> q;
+	q.push(origin);
+	while (!q.empty()) {
+		Territory* node = q.front();
+		q.pop();
+		visited[this->index_territory(node)] = true;
+		for (int i = 0; i < node->get_neighbors().size(); i++) {
+			Territory* connection = node->get_neighbors()[i];
+			if (index_territory(connection) != -1 && !visited[this->index_territory(connection)]) {
+				q.push(connection);
 			}
 		}
-		return;
 	}
 }
 
 // Gets the index of a territory in the territories vector, -1 if not placed on the map
-int Map::indexTerritory(Territory* t) {
+int Map::index_territory(Territory* t) {
 	for (int i = 0; i < this->territories.size(); i++) {
 		if (this->territories.at(i)->equals(t)) {
 			return i;

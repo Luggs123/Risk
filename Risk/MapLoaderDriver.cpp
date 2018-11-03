@@ -7,15 +7,17 @@
 #include "MapLoader.h"
 
 int main() {
-	std::string mapFile;
-	mapFile = "World.map";
-	Map* worldMap = getMap(mapFile);
+	std::string map_file;
+	map_file = "World.map";
+	Map* world_map = get_map(map_file);
 
-	for (Continent* c : worldMap->continents) {
-		std::cout << c->getName() << ": " << std::endl;
-		for (Territory* t : c->getTerritories()) {
-			std::cout << t->getName() << ", ";
+	for (Continent* c : world_map->continents) {
+		std::cout << c->get_name() << ": " << std::endl;
+		for (Territory* t : c->get_territories()) {
+			std::cout << t->get_name() << ", ";
 		}
-		std::cout << c->isConnected() << std::endl;
+		std::cout << c->is_connected() << std::endl;
 	}
+
+	std::cout << "Map: " << world_map->is_connected();
 }

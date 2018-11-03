@@ -8,11 +8,11 @@ namespace {
 	std::vector<Continent*> continents;
 }
 
-Continent* parseContinent(std::string line);
-Territory* createTerritories(std::string line);
-Continent* findContinent(std::string name);
-Territory* findTerritory(std::string name);
-void assignTerritory(std::string line);
-Map* getMap(std::string map);
+Continent* parse_continent(std::string line);
+Territory* create_territories(std::string line);
+Continent* find_continent(std::string name);
+Territory* find_territory(std::string name);
+void assign_territory(std::string line);
+Map* get_map(std::string map);
 
 #endif
