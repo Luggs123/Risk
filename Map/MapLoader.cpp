@@ -61,7 +61,7 @@ Territory* find_territory(std::string name) {
 	return NULL;
 }
 
-// Given the existence of a given territory, does a second apss through to assign it to a continent and its neighbors
+// Given the existence of a given territory, does a second pass through to assign it to a continent and its neighbors
 void assign_territory(std::string line) {
 	std::string delimiter = ",";
 	int delimiter_pos = line.find(delimiter);
@@ -93,6 +93,9 @@ void assign_territory(std::string line) {
 		delimiter_pos = line.find(delimiter);
 		terr->add_neighbor(find_territory(neighbor));
 	}
+
+	neighbor = line.substr(0, delimiter_pos);
+	terr->add_neighbor(find_territory(neighbor));
 
 	cont->add_territory(terr);
 }

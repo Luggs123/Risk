@@ -86,20 +86,22 @@ bool Continent::equals(Continent* c) {
 }
 
 bool Continent::is_connected() {
-	bool* visited = new bool[this->get_territories().size()];
-	for (int i = 0; i < this->get_territories().size(); i++) {
-		visited[i] = false;
-	}
-	bfs(territories[0], visited);
+	for (Territory* t : this->get_territories()) {
+		bool* visited = new bool[this->get_territories().size()];
+		for (int i = 0; i < this->get_territories().size(); i++) {
+			visited[i] = false;
+		}
+		bfs(t, visited);
 
 	// Check if all nodes were visited.
-	for (int i = 0; i < territories.size(); i++) {
-		if (!visited[i]) {
-			delete[] visited;
-			return false;
+		for (int i = 0; i < territories.size(); i++) {
+			if (!visited[i]) {
+				delete[] visited;
+				return false;
+			}
 		}
+		delete[] visited;
 	}
-	delete[] visited;
 	return true;
 }
 
@@ -154,20 +156,22 @@ void Map::add_continent(Continent* c) {
 // Service Methods
 // Determines the connectivity of the Map
 bool Map::is_connected() {
-	bool* visited = new bool[this->territories.size()];
-	for (int i = 0; i < this->territories.size(); i++) {
-		visited[i] = false;
-	}
-	bfs(territories[0], visited);
-
-	// Check if all nodes were visited.
-	for (int i = 0; i < territories.size(); i++) {
-		if (!visited[i]) {
-			delete[] visited;
-			return false;
+	for (Territory* t : this->territories) {
+		bool* visited = new bool[this->territories.size()];
+		for (int i = 0; i < this->territories.size(); i++) {
+			visited[i] = false;
 		}
+		bfs(territories[0], visited);
+
+		// Check if all nodes were visited.
+		for (int i = 0; i < territories.size(); i++) {
+			if (!visited[i]) {
+				delete[] visited;
+				return false;
+			}
+		}
+		delete[] visited;
 	}
-	delete[] visited;
 	return true;
 }
 
@@ -195,4 +199,15 @@ int Map::index_territory(Territory* t) {
 		}
 	}
 	return -1; 
+}
+
+// Determines the validity of the map
+bool Map::is_valid() {
+	for (Continent* c : this->continents) {
+		if (!c->is_connected()) {
+			return false;
+		}
+	}
+
+	return this->is_connected();
 }

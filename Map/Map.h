@@ -79,5 +79,6 @@ public:
 	bool is_connected();
 	void bfs(Territory* origin, bool* visited);
 	int index_territory(Territory* t);
+	bool is_valid();
 };
 #endif

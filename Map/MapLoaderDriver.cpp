@@ -13,13 +13,21 @@ int main() {
 	map_file = "World.map";
 	Map* world_map = get_map(map_file);
 	
+	// Neighbor List
+	//for (Continent* c : world_map->continents) {
+	//	cout << c->get_name() << ": " << endl;
+	//	for (Territory* t : c->get_territories()) {
+	//		cout << t->get_name() << ": ";
+	//		for (Territory* n : t->get_neighbors()) {
+	//			cout << n->get_name() << ", ";
+	//		}
+	//		cout << endl;
+	//	}
+	//}
+
+	// Connectivity
 	for (Continent* c : world_map->continents) {
-		cout << c->get_name() << ": " << endl;
-		for (Territory* t : c->get_territories()) {
-			cout << t->get_name() << ": ";
-			for (Territory* n : t->get_neighbors()) {
-				cout << n->get_name() << ", ";
-			}
-		}
+		cout << c->get_name() << " " << c->is_connected() << endl;
 	}
+	cout << world_map->is_connected();
 }
