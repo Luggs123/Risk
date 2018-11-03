@@ -3,21 +3,23 @@
 
 #include <iostream>
 #include <string>
-#include "Map.h"
-#include "MapLoader.h"
+#include "../Map/Map.h"
+#include "../Map/MapLoader.h"
+
+using namespace std;
 
 int main() {
-	std::string map_file;
+	string map_file;
 	map_file = "World.map";
 	Map* world_map = get_map(map_file);
-
+	
 	for (Continent* c : world_map->continents) {
-		std::cout << c->get_name() << ": " << std::endl;
+		cout << c->get_name() << ": " << endl;
 		for (Territory* t : c->get_territories()) {
-			std::cout << t->get_name() << ", ";
+			cout << t->get_name() << ": ";
+			for (Territory* n : t->get_neighbors()) {
+				cout << n->get_name() << ", ";
+			}
 		}
-		std::cout << c->is_connected() << std::endl;
 	}
-
-	std::cout << "Map: " << world_map->is_connected();
 }

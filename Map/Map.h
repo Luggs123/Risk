@@ -6,11 +6,12 @@
 
 #include <vector>
 #include <string>
+#include "../Player/Player.h"
 
 // Defines an individual territory on the map
 class Territory {
 private:
-	//Player* owner;
+	Player* owner;
 	std::string name;
 	int troops;
 	std::vector<Territory*> neighbors;
@@ -23,12 +24,12 @@ public:
 	int Territory::get_troops();
 	std::string get_name();
 	std::vector<Territory*> get_neighbors();
-	//Player* Territory::getOwner();
+	Player* get_owner();
 
 	// Mutators
 	void set_troops(int troops);
 	void add_neighbor(Territory* t);
-	//void Territory::setOwner(Player* owner);
+	void set_owner(Player* owner);
 
 	// Service Methods
 	bool equals(Territory* t);
@@ -57,7 +58,7 @@ public:
 	// Service Methods
 	bool equals(Continent* c);
 	bool is_connected();
-	void Continent::bfs(Territory* origin, bool* visited);
+	void bfs(Territory* origin, bool* visited);
 	int index_territory(Territory* t);
 };
 
@@ -68,6 +69,7 @@ public:
 	std::vector<Territory*> territories;
 
 	// Constructor
+	Map();
 	Map(std::vector<Continent*> continents, std::vector<Territory*> territories);
 
 	// Mutators
@@ -75,7 +77,7 @@ public:
 
 	// Service Methods
 	bool is_connected();
-	void Map::bfs(Territory* origin, bool* visited);
+	void bfs(Territory* origin, bool* visited);
 	int index_territory(Territory* t);
 };
 #endif

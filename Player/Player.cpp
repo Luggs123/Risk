@@ -1,10 +1,16 @@
 #include "Player.h"
+#include "../Map/Map.h"
 
 Player::Player() {
 	this->PlayerID = -1;
 	this->Free_Troops = 0;
-	
-	
+	this->cardOnHand = new Hand();
+}
+
+Player::Player(int ID) {
+	this->PlayerID = ID;
+	this->Free_Troops = 0;
+	this->cardOnHand = new Hand();
 }
 
 void Player::setPID(int id) {this->PlayerID = id;}
@@ -13,13 +19,20 @@ int Player::getPID() { return this->PlayerID; }
 void Player::setFree_Troops(int num) { this->Free_Troops = num; }
 int Player::getFree_troops() { return this->Free_Troops; }
 
-void Player::showcardsonHand() { this->cardOnHand.displayCards(); }
+void Player::showcardsonHand() { this->cardOnHand->displayCards(); }
 
-void Player::addTerritory(Territory_Test &x) { this->controlled.push_back(x); }
-//void Player::loseTerritory(Territory &x){}
+void Player::addTerritory(Territory* x) { this->controlled.push_back(x); }
+void Player::loseTerritory(Territory* x){
+	for (int i = 0; i < controlled.size(); i++) {
+		if (controlled[i]->equals(x)) {
+			controlled.erase(controlled.begin() + i);
+			break;
+		}
+	}
+}
 void Player::showTerritory() {
 	for (unsigned int i = 0; i < this->controlled.size(); i++) {
-		cout << controlled[i].getname() << "  ";
+		cout << controlled[i]->get_owner() << "  ";
 	}
 }
 
@@ -27,7 +40,7 @@ void Player::attackroll() {
 	int tempn;
 	do
 	{
-		cout << "Please choose the number of dices to rool for attack, range from 1~3" << endl;
+		cout << "Please choose the number of dice to roll for attack, range from 1~3" << endl;
 		cin >> tempn;
 		if ((tempn > 0) && (tempn < 4)) {
 			D.roll(tempn);
@@ -38,12 +51,12 @@ void Player::attackroll() {
 	} while ( true);
 }//roll to attack
 
-void Player::defencerool() {
+void Player::defenceroll() {
 	int tempn;
 	do
 	{
 		cout <<"You are being attacked"
-			 << "Please choose the number of dices to rool for defence, range from 1~2" << endl;
+			 << "Please choose the number of dices to roll for defence, range from 1~2" << endl;
 		cin >> tempn;
 		if ((tempn > 0) && (tempn < 3)) {
 			D.roll(tempn);

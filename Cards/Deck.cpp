@@ -2,8 +2,9 @@
 // Created by Michael Wu on 2018-10-03.
 //
 
-
 #include "Deck.h"
+
+Deck::Deck() {}
 
 Deck::Deck(std::vector<std::string> &territoryList)
 {

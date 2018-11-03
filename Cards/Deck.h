@@ -19,6 +19,7 @@ private:
     int currentSet;
 
 public:
+	Deck();
     Deck(std::vector<std::string> &territoryList);
     Card draw();
     void incrementSet();

@@ -6,6 +6,7 @@
 #include <queue>
 #include <iostream>
 #include "Map.h"
+#include "../Player/Player.h"
 
 // ================== TERRITORY ==================
 // Constructor
@@ -26,9 +27,9 @@ std::vector<Territory*> Territory::get_neighbors() {
 	return this->neighbors;
 }
 
-//Player* Territory::getOwner() {
-//	return this->owner;
-//}
+Player* Territory::get_owner() {
+	return this->owner;
+}
 
 // Mutators
 void Territory::set_troops(int troops) {
@@ -39,9 +40,9 @@ void Territory::add_neighbor(Territory* t) {
 	this->neighbors.push_back(t);
 }
 
-//void Territory::setOwner(Player* owner) {
-//	this->owner = owner;
-//}
+void Territory::set_owner(Player* owner) {
+	this->owner = owner;
+}
 
 // Service Methods
 bool Territory::equals(Territory* t) {
@@ -134,6 +135,7 @@ std::vector<Continent> continents;
 std::vector<Territory> territories;
 
 // Constructor
+Map::Map() {}
 Map::Map(std::vector<Continent*> continents, std::vector<Territory*> territories) {
 	this->continents = continents;
 	this->territories = territories;
