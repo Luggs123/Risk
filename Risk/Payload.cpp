@@ -3,6 +3,8 @@
 
 #include "Payload.h"
 
+Payload::Payload() {}
+
 Payload::Payload(Map m, std::vector<Player*> p, Deck d) {
 	this->map = m;
 	this->players = p;

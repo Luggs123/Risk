@@ -21,6 +21,7 @@ private:
 
 public:
 	// Constructor
+	Payload();
 	Payload(Map m, std::vector<Player*> p, Deck d);
 
 	// Accessors

@@ -7,16 +7,41 @@ using namespace std;
 #include <string>
 #include "../Map/MapLoader.h"
 #include "Payload.h"
+#include "Start.h"
 
-Payload start() {
+Payload* start(string path, int players) {
+	Map game_map = *get_map(path);
+	if (!game_map.is_valid()) {
+		//throw "This map is not valid. Retry this program with a valid map file.";
+	}
+
+	if (players < 2 || players > 6) {
+		//throw "That is not a valid amount of players. Please try again with a different program execution.";
+	}
+
+	vector<Player*>* playerVector = new vector<Player*>();
+	for (int i = 0; i < players; i++) {
+		playerVector->push_back(new Player(i + 1));
+	}
+
+	vector<string>* territories = new vector<string>();
+	for (Territory* t : game_map.territories) {
+		territories->push_back(t->get_name());
+	}
+
+	Deck* deck = new Deck(*territories);
+
+	return new Payload(game_map, *playerVector, *deck);
+}
+
+Payload* prompt_start() {
 	string path;
 	cout << "Please select a .map file to be used for this game." << endl;
 	cin >> path;
 
-	Map game_map = *get_map(path);
-
 	int players;
 	cout << "How many players will be participating? (2-6)" << endl;
+
 	while (true) {
 		try {
 			string pl;
@@ -34,17 +59,5 @@ Payload start() {
 		}
 	}
 
-	vector<Player*>* playerVector = new vector<Player*>();
-	for (int i = 0; i < players; i++) {
-		playerVector->push_back(new Player(i + 1));
-	}
-
-	vector<string>* territories = new vector<string>();
-	for (Territory* t : game_map.territories) {
-		territories->push_back(t->get_name());
-	}
-
-	Deck* deck = new Deck(*territories);
-
-	return *(new Payload(game_map, *playerVector, *deck));
+	return start(path, players);
 }

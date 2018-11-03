@@ -26,6 +26,7 @@ public:
     int getCurrentSet();
     void displayDeck();
     void placeBackCards(Card card1, Card card2, Card card3);
+	int getDeckSize();
 };
 
 #endif //RISK_DECK_DECK_H

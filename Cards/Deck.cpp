@@ -81,3 +81,7 @@ void Deck::placeBackCards(Card card1, Card card2, Card card3)
 
     shuffle(this->cards.begin(), this->cards.end(), generator);
 }
+
+int Deck::getDeckSize() {
+	return this->cards.size();
+}
