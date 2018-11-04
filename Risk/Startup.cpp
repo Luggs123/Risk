@@ -14,7 +14,7 @@ void Startup::assign_countries(vector<Player*> &players, vector<Territory*> &ter
 {
     int index = 0;
     shuffle(territories.begin(), territories.end(), generator);
-    for (auto territory : territories) {
+    for (auto &territory : territories) {
         if (index == players.size())
             index = 0;
 
@@ -46,18 +46,18 @@ void Startup::assign_armies(vector<Player*> &players)
             cout << "Invalid number of players." << endl;
     }
 
-    for (auto player : players) {
+    for (auto &player : players) {
         player->setFree_Troops(armies);
     }
 
     for (int i = 0; i < armies; i++) {
-        for (auto player : players) {
-            cout << "Player " << player->getPID() << " have " << player->getFree_troops() << " armies left." << endl;
+        for (auto &player : players) {
+            cout << "Player " << player->getPID() << " has " << player->getFree_troops() << " armies left." << endl;
             cout << "Please enter the choose a territory from the following list you will like to place an army in: " << endl;
 
             int territory_count = static_cast<int>(player->get_own_territories().size());
             for (int j = 0; j < territory_count; j++) {
-                Territory* current_territory = &player->get_own_territories()[j];
+                Territory* current_territory = &(player->get_own_territories()[j]);
                 cout << j << ") " << current_territory->getName() << " (" << current_territory->getTroops()<< " armies)"<< endl;
             }
 

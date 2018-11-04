@@ -54,4 +54,13 @@ int main() {
     territories.emplace_back(&t12);
 
     Startup::execute_startup_phase(players, territories);
+
+    cout << "***** Results *****" << endl;
+    for (auto &player : players) {
+        cout << "Player " << player->getPID() << ":" << endl;
+        for (auto &territory : player->get_own_territories()) {
+            cout << territory.getName() << " has " << territory.getTroops() << " armies" << endl;
+        }
+        cout << "\n";
+    }
 }
