@@ -4,6 +4,7 @@
 
 #include "Game.h"
 
+// driver for the main game loop
 int main()
 {
     // Setup for list of territories

@@ -4,6 +4,12 @@
 
 #include "Game.h"
 
+/**
+ * Initiate the main game loop, in a round robin fashion, where each player can reinforce, attack and fortify.
+ * @param players
+ * @param territories
+ * @param isTest
+ */
 void Game::execute_main_game_loop(vector<Player*> &players, vector<Territory*> &territories, bool isTest = false)
 {
     bool game_continue = true;
