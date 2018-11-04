@@ -5,6 +5,7 @@
 #include "Startup.h"
 #include "map/MapLoader.h"
 
+// Driver for the startup phase
 int main() {
     // Setup for list of players
     Player playerA;

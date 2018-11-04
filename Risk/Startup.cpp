@@ -4,12 +4,22 @@
 
 #include "Startup.h"
 
-
+/**
+ * Determines the order of play
+ * @param players
+ * @param generator
+ */
 void Startup::generate_order_of_play(vector<Player*> &players, default_random_engine &generator)
 {
     shuffle(players.begin(), players.end(), generator);
 }
 
+/**
+ * Randomly assigns all territories to each and every player
+ * @param players
+ * @param territories
+ * @param generator
+ */
 void Startup::assign_countries(vector<Player*> &players, vector<Territory*> &territories, default_random_engine &generator)
 {
     int index = 0;
@@ -23,6 +33,10 @@ void Startup::assign_countries(vector<Player*> &players, vector<Territory*> &ter
     }
 }
 
+/**
+ * Assigns the number of armies depending on the number of players and places them on the player's owned territories.
+ * @param players
+ */
 void Startup::assign_armies(vector<Player*> &players)
 {
     int armies = 0;
@@ -84,6 +98,11 @@ void Startup::assign_armies(vector<Player*> &players)
     }
 }
 
+/**
+ * Initiate the startup phase of the game
+ * @param players
+ * @param territories
+ */
 void Startup::execute_startup_phase(vector<Player*> &players, vector<Territory*> &territories)
 {
     unsigned int seed = (unsigned int)chrono::system_clock::now().time_since_epoch().count();
