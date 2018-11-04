@@ -1,14 +1,12 @@
 //edited by YINGJIE ZHOU
 #pragma once
-#include"vector"
-#include"iostream"
-#include"string"
+#include <vector>
+#include <iostream>
+#include <string>
 
-#include "dice.h"
-//#include "Map.h"
-#include "Hand.h"
-
-#include"Territory_Test.h"
+#include "dice/dice.h"
+#include "map/Map.h"
+#include "deck/Hand.h"
 
 using namespace std;
 
@@ -18,8 +16,7 @@ private:
 	//int check_reinforceAmout();// ToDo: calculate the number of troops a player get
 	int check_continents();// ToDo: check if this player owned continents
 	int get_troops(/*Territory*/int &x);// TODO: get the amount of troops for a specific territory
-	void add_troops(/*Territory*/int &x);// TODO: add troops to a specific territory
-	vector<Territory_Test> controlled;// a vector of Territories owned by player
+	vector<Territory> controlled;// a vector of Territories owned by player
 	
 	
 
@@ -43,9 +40,11 @@ public:
 	void showcardsonHand();
 	
 
-	void addTerritory(Territory_Test &x);//add new territory that player just occupied
+	void addTerritory(Territory &x);//add new territory that player just occupied
 	//void loseTerritory(Territory &x);//remove the territory that player just lose
 	void showTerritory();
 	void attackroll();
 	void defencerool();
+    vector<Territory>& get_own_territories();
+	void add_troops(int index, int troop);
 };

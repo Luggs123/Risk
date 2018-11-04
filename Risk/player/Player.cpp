@@ -13,13 +13,13 @@ int Player::getPID() { return this->PlayerID; }
 void Player::setFree_Troops(int num) { this->Free_Troops = num; }
 int Player::getFree_troops() { return this->Free_Troops; }
 
-void Player::showcardsonHand() { this->cardOnHand.displayCards(); }
+void Player::showcardsonHand() { this->cardOnHand.display_cards(); }
 
-void Player::addTerritory(Territory_Test &x) { this->controlled.push_back(x); }
+void Player::addTerritory(Territory &x) { this->controlled.push_back(x); }
 //void Player::loseTerritory(Territory &x){}
 void Player::showTerritory() {
 	for (unsigned int i = 0; i < this->controlled.size(); i++) {
-		cout << controlled[i].getname() << "  ";
+		cout << controlled[i].getName() << "  ";
 	}
 }
 
@@ -93,4 +93,16 @@ void Player::fortify() {
 
 	//get a card from deck and end fortify. let main friver to call the next player to start his round
 	//this->cardOnHand.placeCardInHand();
+}
+
+vector<Territory>& Player::get_own_territories() {
+	return this->controlled;
+}
+
+void Player::add_troops(int index, int troop) {
+    int current_troops = this->controlled[index].getTroops();
+    this->controlled[index].setTroops(current_troops + troop);
+
+    int current_free_troops = this->getFree_troops();
+    this->setFree_Troops(current_free_troops - troop);
 }

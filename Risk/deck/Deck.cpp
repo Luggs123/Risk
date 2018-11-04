@@ -2,33 +2,39 @@
 // Created by Michael Wu on 2018-10-03.
 //
 
-
+#include <vector>
+#include <cmath>
+#include <random>
+#include <algorithm>
+#include <chrono>
+#include <iostream>
 #include "Deck.h"
+#include "Card.h"
 
-Deck::Deck(std::vector<std::string> &territoryList)
+Deck::Deck(std::vector<std::string> &territory_list)
 {
     using namespace std;
 
     unsigned int seed = (unsigned int)chrono::system_clock::now().time_since_epoch().count(); // seed for shuffling
     default_random_engine generator(seed);
-    this->currentSet = 0;
+    this->current_set = 0;
     //TODO: validate data by throwing exception??
 
-    shuffle(territoryList.begin(), territoryList.end(), generator);
+    shuffle(territory_list.begin(), territory_list.end(), generator);
 
-    int numType = (int)floor(territoryList.size() / 3);
-    int remainder = (int)territoryList.size() - (numType * 3);
+    int num_type = (int)floor(territory_list.size() / 3);
+    int remainder = (int)territory_list.size() - (num_type * 3);
 
-    for (unsigned int i = 0; i < (territoryList.size() - remainder); i+=3) {
-        this->cards.emplace_back(Card(0, territoryList[i]));
-        this->cards.emplace_back(Card(1, territoryList[i + 1]));
-        this->cards.emplace_back(Card(2, territoryList[i + 2]));
+    for (unsigned int i = 0; i < (territory_list.size() - remainder); i+=3) {
+        this->cards.emplace_back(Card(0, territory_list[i]));
+        this->cards.emplace_back(Card(1, territory_list[i + 1]));
+        this->cards.emplace_back(Card(2, territory_list[i + 2]));
     }
 
     if (remainder > 0) {
         std::uniform_int_distribution<> dis(0, 2);
         for (unsigned int i = 1; i <= remainder; i++) {
-            this->cards.emplace_back(dis(generator), territoryList[territoryList.size() - i]);
+            this->cards.emplace_back(dis(generator), territory_list[territory_list.size() - i]);
         }
     }
 
@@ -49,26 +55,26 @@ Card Deck::draw()
     return card;
 }
 
-void Deck::incrementSet()
+void Deck::increment_set()
 {
-    this->currentSet++;
+    this->current_set++;
 }
 
-int Deck::getCurrentSet()
+int Deck::get_current_set()
 {
-    return this->currentSet;
+    return this->current_set;
 }
 
-void Deck::displayDeck()
+void Deck::display_deck()
 {
     std::cout << "Deck: " << std::endl;
     for (Card &card : this->cards) {
-        card.displayCard();
+        card.display_card();
     }
     std::cout << "\n";
 }
 
-void Deck::placeBackCards(Card card1, Card card2, Card card3)
+void Deck::place_back_cards(Card card1, Card card2, Card card3)
 {
     using namespace std;
     this->cards.emplace_back(card1);

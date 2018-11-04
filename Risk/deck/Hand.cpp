@@ -2,7 +2,10 @@
 // Created by Michael Wu on 2018-10-04.
 //
 
+#include <iostream>
 #include "Hand.h"
+#include "Card.h"
+#include "Deck.h"
 
 int Hand::exchange(unsigned int pos1, unsigned int pos2, unsigned int pos3, Deck &current_deck)
 {

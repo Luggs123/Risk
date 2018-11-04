@@ -6,25 +6,21 @@
 #define RISK_DECK_DECK_H
 
 #include <vector>
-#include <cmath>
-#include <random>
-#include <algorithm>
-#include <chrono>
-#include <iostream>
+#include <string>
 #include "Card.h"
 
 class Deck {
 private:
     std::vector<Card> cards;
-    int currentSet;
+    int current_set;
 
 public:
-    Deck(std::vector<std::string> &territoryList);
+    Deck(std::vector<std::string> &territory_list);
     Card draw();
-    void incrementSet();
-    int getCurrentSet();
-    void displayDeck();
-    void placeBackCards(Card card1, Card card2, Card card3);
+    void increment_set();
+    int get_current_set();
+    void display_deck();
+    void place_back_cards(Card card1, Card card2, Card card3);
 };
 
 #endif //RISK_DECK_DECK_H
