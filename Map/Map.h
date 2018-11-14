@@ -6,7 +6,10 @@
 
 #include <vector>
 #include <string>
-#include "../Player/Player.h"
+#include <queue>
+#include <iostream>
+
+class Player;
 
 // Defines an individual territory on the map
 class Territory {
@@ -21,7 +24,7 @@ public:
 	Territory(std::string name);
 
 	// Accessors
-	int Territory::get_troops();
+	int get_troops();
 	std::string get_name();
 	std::vector<Territory*> get_neighbors();
 	Player* get_owner();
@@ -48,7 +51,7 @@ public:
 	Continent(std::string name, int value);
 
 	// Accessors
-	int Continent::get_value();
+	int get_value();
 	std::string get_name();
 	std::vector<Territory*> get_territories();
 
@@ -81,4 +84,5 @@ public:
 	int index_territory(Territory* t);
 	bool is_valid();
 };
+
 #endif

@@ -1,37 +1,34 @@
+//edited by YINGJIE ZHOU
 #pragma once
+
 #include <vector>
 #include <iostream>
 #include <string>
 
-#include "../Dice/dice.h"
-#include "../Cards/Hand.h"
-class Territory;
-
-using namespace std;
+#include "../Dice/Dice.h"
+#include "../Map/Map.h"
+#include "../Deck/Hand.h"
 
 class Player {
 
 private:
-	//int check_reinforceAmout();// ToDo: calculate the number of troops a player get
-	int check_continents();// ToDo: check if this player owned continents
+	//int check_reinforceAmout();// ToDo: calculate the number of troops a Player get
+	int check_continents();// ToDo: check if this Player owned continents
 	int get_troops(/*Territory*/int &x);// TODO: get the amount of troops for a specific territory
-	void add_troops(/*Territory*/int &x);// TODO: add troops to a specific territory
-	vector<Territory*> controlled;// a vector of Territories owned by player
+	std::vector<Territory*> controlled;// a vector of Territories owned by Player
 	
 	
 
 	int PlayerID;
-	int Free_Troops;//the number of troops player can placed as they want
-	Hand* cardOnHand; //the Object that takes the player's cards on hand
-	dice D;// the DICE Object for the player
+	int Free_Troops;//the number of troops Player can placed as they want
+	Hand* cardOnHand; //the Object that takes the Player's cards on hand
+	Dice D;// the DICE Object for the Player
 
-	void reinforce();
-	void attack();
-	void fortify();
 
 public:
 	Player();
 	Player(int ID);
+	~Player();
 	void round();
 
 	void setPID(int ID);
@@ -39,11 +36,19 @@ public:
 	void setFree_Troops(int num);
 	int getFree_troops();
 	void showcardsonHand();
-	
 
-	void addTerritory(Territory* x);//add new territory that player just occupied
-	void loseTerritory(Territory* x);//remove the territory that player just lose
+	void addTerritory(Territory &x);//add new territory that Player just occupied
+	//void loseTerritory(Territory &x);//remove the territory that Player just lose
 	void showTerritory();
 	void attackroll();
 	void defenceroll();
+    std::vector<Territory*>& get_own_territories();
+	void add_troops(int index, int troop);
+
+	void reinforce();
+	void attack();
+	void fortify();
+
+	void fight(Territory* att, Territory* def);
+	void movingArmy();
 };

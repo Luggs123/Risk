@@ -1,48 +1,42 @@
 // Assignment 1, Part 2: MapLoader
 // Written by Michael Luger, 40055539
 
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <string>
-#include <vector>
-#include <regex>
 #include "Map.h"
 #include "MapLoader.h"
 
 // Parses a Continent from a line
-Continent* parse_continent(std::string line) {
+Continent* MapLoader::parse_continent(std::string line) {
 	std::string delimiter = "=";
 
-	int delimiter_pos = line.find(delimiter);
-	if (delimiter_pos == std::string::npos) {
+	int delimiterPos = line.find(delimiter);
+	if (delimiterPos == std::string::npos) {
 		return NULL;
 	}
 
-	std::string name = line.substr(0, delimiter_pos);
-	int value = std::stoi(line.substr(delimiter_pos + 1, std::string::npos));
+	std::string name = line.substr(0, delimiterPos);
+	int value = std::stoi(line.substr(delimiterPos + 1, std::string::npos));
 
 	return new Continent(name, value);
 }
 
 // Creates the Territories via parsing but does not establish neighborhood
-Territory* create_territories(std::string line) {
+Territory* MapLoader::create_territories(std::string line) {
 	std::string delimiter = ",";
 
-	int delimiter_pos = line.find(delimiter);
-	if (delimiter_pos == std::string::npos) {
+	int delimiterPos = line.find(delimiter);
+	if (delimiterPos == std::string::npos) {
 		return NULL;
 	}
 
-	std::string name = line.substr(0, delimiter_pos);
-	line = line.substr(delimiter_pos + 1, std::string::npos);
-	delimiter_pos = line.find(delimiter);
+	std::string name = line.substr(0, delimiterPos);
+	line = line.substr(delimiterPos + 1, std::string::npos);
+	delimiterPos = line.find(delimiter);
 
 	return new Territory(name);
 }
 
 // Locates a continent from the vector
-Continent* find_continent(std::string name) {
+Continent* MapLoader::find_continent(std::string name) {
 	for (Continent* c : continents) {
 		if (name == c->get_name()) {
 			return c;
@@ -52,7 +46,7 @@ Continent* find_continent(std::string name) {
 }
 
 // Locates a territory from the vector
-Territory* find_territory(std::string name) {
+Territory* MapLoader::find_territory(std::string name) {
 	for (Territory* t : territories) {
 		if (name == t->get_name()) {
 			return t;
@@ -61,55 +55,52 @@ Territory* find_territory(std::string name) {
 	return NULL;
 }
 
-// Given the existence of a given territory, does a second pass through to assign it to a continent and its neighbors
-void assign_territory(std::string line) {
+// Given the existence of a given territory, does a second apss through to assign it to a continent and its neighbors
+void MapLoader::assign_territory(std::string line) {
 	std::string delimiter = ",";
-	int delimiter_pos = line.find(delimiter);
+	int delimiterPos = line.find(delimiter);
 
-	std::string terrName = line.substr(0, delimiter_pos);
-	line = line.substr(delimiter_pos + 1, std::string::npos);
-	delimiter_pos = line.find(delimiter);
+	std::string terrName = line.substr(0, delimiterPos);
+	line = line.substr(delimiterPos + 1, std::string::npos);
+	delimiterPos = line.find(delimiter);
 	Territory* terr = find_territory(terrName);
 
 	// Progresses the stream, and techncially verifies even if not used
-	int xPos = std::stoi(line.substr(0, delimiter_pos));
-	line = line.substr(delimiter_pos + 1, std::string::npos);
-	delimiter_pos = line.find(delimiter);
-	int yPos = std::stoi(line.substr(0, delimiter_pos));
-	line = line.substr(delimiter_pos + 1, std::string::npos);
-	delimiter_pos = line.find(delimiter);
+	int xPos = std::stoi(line.substr(0, delimiterPos));
+	line = line.substr(delimiterPos + 1, std::string::npos);
+	delimiterPos = line.find(delimiter);
+	int yPos = std::stoi(line.substr(0, delimiterPos));
+	line = line.substr(delimiterPos + 1, std::string::npos);
+	delimiterPos = line.find(delimiter);
 
-	std::string contName = line.substr(0, delimiter_pos);
-	line = line.substr(delimiter_pos + 1, std::string::npos);
-	delimiter_pos = line.find(delimiter);
+	std::string contName = line.substr(0, delimiterPos);
+	line = line.substr(delimiterPos + 1, std::string::npos);
+	delimiterPos = line.find(delimiter);
 	Continent* cont = find_continent(contName);
 
 	std::vector<Territory*> neighbors;
 	std::string neighbor;
 
-	while (delimiter_pos != std::string::npos) {
-		neighbor = line.substr(0, delimiter_pos);
-		line = line.substr(delimiter_pos + 1, std::string::npos);
-		delimiter_pos = line.find(delimiter);
+	while (delimiterPos != std::string::npos) {
+		neighbor = line.substr(0, delimiterPos);
+		line = line.substr(delimiterPos + 1, std::string::npos);
+		delimiterPos = line.find(delimiter);
 		terr->add_neighbor(find_territory(neighbor));
 	}
-
-	neighbor = line.substr(0, delimiter_pos);
-	terr->add_neighbor(find_territory(neighbor));
 
 	cont->add_territory(terr);
 }
 
-// Returns the map represented by a .map file
-Map* get_map(std::string map) {
-	std::ifstream map_file;
-	map_file.open(map);
+// Returns the Map represented by a .Map file
+Map* MapLoader::get_map(std::string map) {
+	std::ifstream mapFile;
+	mapFile.open(map);
 	std::string nextLine;
 
 	int mode = 0;
-	std::vector<std::string> repeat_territories;
+	std::vector<std::string> repeatTerritories;
 
-	while (std::getline(map_file, nextLine)) {
+	while (std::getline(mapFile, nextLine)) {
 		// Skip empty lines because getline doesn't like those
 		if (nextLine.compare("") == 0) {
 			continue;
@@ -140,17 +131,26 @@ Map* get_map(std::string map) {
 		// first create territories - neighbors and appropriate continents are done after file is read
 		else if (mode == 3) {
 			territories.push_back(create_territories(nextLine));
-			repeat_territories.push_back(nextLine);
+			repeatTerritories.push_back(nextLine);
 		}
 	}
 
-	map_file.close();
-	for (std::string line : repeat_territories) {
+	mapFile.close();
+	for (std::string line : repeatTerritories) {
 		assign_territory(line);
 	}
 
-	Map* world_map = new Map(continents, territories);
+	Map* worldMap = new Map(continents, territories);
 
-	return world_map;
+	return worldMap;
 }
 
+MapLoader::~MapLoader() {
+    for (Territory* t : this->territories) {
+        delete t;
+    }
+
+    for (Continent* c : this->continents) {
+        delete c;
+    }
+}

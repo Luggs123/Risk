@@ -1,12 +1,7 @@
 // Assignment 1, Part 1: Map
 // Written by Michael Luger, 40055539
 
-#include <vector>
-#include <string>
-#include <queue>
-#include <iostream>
 #include "Map.h"
-#include "../Player/Player.h"
 
 // ================== TERRITORY ==================
 // Constructor
@@ -93,7 +88,7 @@ bool Continent::is_connected() {
 		}
 		bfs(t, visited);
 
-	// Check if all nodes were visited.
+		// Check if all nodes were visited.
 		for (int i = 0; i < territories.size(); i++) {
 			if (!visited[i]) {
 				delete[] visited;
@@ -198,7 +193,7 @@ int Map::index_territory(Territory* t) {
 			return i;
 		}
 	}
-	return -1; 
+	return -1;
 }
 
 // Determines the validity of the map
