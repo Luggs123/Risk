@@ -16,23 +16,24 @@ private:
 	int check_continents();// ToDo: check if this Player owned continents
 	int get_troops(/*Territory*/int &x);// TODO: get the amount of troops for a specific territory
 	std::vector<Territory*> controlled;// a vector of Territories owned by Player
-	
-	
 
-	int PlayerID;
-	int Free_Troops;//the number of troops Player can placed as they want
-	Hand* cardOnHand; //the Object that takes the Player's cards on hand
-	Dice D;// the DICE Object for the Player
+    int PlayerID;
+    std::string player_name;
+    int free_troops;//the number of troops player can placed as they want
+    Hand* card_on_hand; //the Object that takes the player's cards on hand
+    Dice D;// the DICE Object for the player
 
 
 public:
 	Player();
-	Player(int ID);
+    Player(std::string n); //constructor
 	~Player();
 	void round();
 
 	void setPID(int ID);
 	int getPID();
+    void set_name(std::string n);
+    void show_name();
 	void setFree_Troops(int num);
 	int getFree_troops();
 	void showcardsonHand();
@@ -51,4 +52,7 @@ public:
 
 	void fight(Territory* att, Territory* def);
 	void movingArmy();
+
+    Territory* get_controlled();
+    int get_number_controlled();
 };

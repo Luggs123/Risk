@@ -2,8 +2,10 @@
 
 using namespace std;
 
-Dice::Dice() {
-    name = "Anonymous Player";
+Dice::Dice()
+{
+
+    name = "Anonymous player";
     totalRolled = 0;
     diceStats[1] = 0;
     diceStats[2] = 0;
@@ -34,14 +36,16 @@ void Dice::getPercentage() {
     cout << fixed << setprecision(2);
     cout << "Percentage for " << name << ":" << endl;
     for (int i = 1; i <= 6; i++) {
-        double temp = ((double) diceStats[i] / (double) totalRolled) * 100;
+        double temp = ((double)diceStats[i] / (double)totalRolled) * 100;
         cout << i << ": " << temp << "%" << endl;
     }
 
 };
+void Dice::roll(int num)
+{
 
-void Dice::roll(int num) {
     for (int i = 0; i < 3; i++) currentResult[i] = 0;
+    currentRolled = num;
     cout << "result:" << endl;
     for (int i = 0; i < num; i++) {
         int temp = (rand() % 6) + 1;
@@ -51,18 +55,17 @@ void Dice::roll(int num) {
     }
     cout << endl;
 };
-
 void Dice::game() {
-    cout << "Hello Player " << name << ", how many Dice you want to roll ? (from 1 to 3)" << endl;
+    cout << "Hello player " << name << ", how many dice you want to roll ? (from 1 to 3)" << endl;
     int numOfdice;
-    cin >> numOfdice;
-    cout << endl;
-    if ((numOfdice >= 1) && (numOfdice <= 3)) {
+    cin >> numOfdice; cout << endl;
+    if ((numOfdice >= 1) && (numOfdice <= 3))
+    {
         totalRolled += numOfdice;
         roll(numOfdice);
         getPercentage();
-    } else cerr << "invalid number of Dice entered, back to main menu.\n";
-    cout << endl;
+    }
+    else cerr << "invalid number of dice entered, back to main menu.\n"; cout << endl;
 
 }
 

@@ -1,6 +1,6 @@
 #pragma once
-#include <string>
 #include <iostream>
+#include <string>
 #include <iomanip>
 
 class Dice {
@@ -9,6 +9,7 @@ public:
 	Dice();
 	Dice(std::string nam);
 	int totalRolled;
+	int currentRolled;
 	int currentResult[3];
 	int diceStats[7];
 	void getPercentage();

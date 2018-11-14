@@ -71,7 +71,7 @@ void Startup::assign_armies(vector<Player*> &players)
 
             int territory_count = static_cast<int>(player->get_own_territories().size());
             for (int j = 0; j < territory_count; j++) {
-                Territory* current_territory = &(player->get_own_territories()[j]);
+                Territory* current_territory = player->get_own_territories()[j];
                 cout << j << ") " << current_territory->get_name() << " (" << current_territory->get_troops()<< " armies)"<< endl;
             }
 

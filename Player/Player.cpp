@@ -4,33 +4,37 @@ using namespace std;
 
 Player::Player() {
     this->PlayerID = -1;
-    this->Free_Troops = 0;
-    this->cardOnHand = new Hand();
+    this->player_name = "Default Player";
+    this->free_troops = 0;
+    this->card_on_hand = new Hand();
 }
 
-Player::Player(int ID) {
-    this->PlayerID = ID;
-    this->Free_Troops = 0;
-    this->cardOnHand = new Hand();
+Player::Player(string n) {
+    this->player_name = n;
+    this->free_troops = 0;
+    this->card_on_hand = new Hand();
 }
 
 Player::~Player() {
-	delete this->cardOnHand;
+	delete this->card_on_hand;
 }
 
 void Player::setPID(int id) {this->PlayerID = id;}
 int Player::getPID() { return this->PlayerID; }
 
-void Player::setFree_Troops(int num) { this->Free_Troops = num; }
-int Player::getFree_troops() { return this->Free_Troops; }
+void Player::set_name(string n) { this->player_name = n; }
+void Player::show_name() { cout << this->player_name << " "; }
 
-void Player::showcardsonHand() { this->cardOnHand->display_cards(); }
+void Player::setFree_Troops(int num) { this->free_troops = num; }
+int Player::getFree_troops() { return this->free_troops; }
+
+void Player::showcardsonHand() { this->card_on_hand->display_cards(); }
 
 void Player::addTerritory(Territory &x) { this->controlled.push_back(&x); }
 //void Player::loseTerritory(Territory &x){}
 void Player::showTerritory() {
 	for (unsigned int i = 0; i < this->controlled.size(); i++) {
-		cout << controlled[i].get_name() << "  ";
+		cout << controlled[i]->get_name() << "  ";
 	}
 }
 
@@ -103,7 +107,8 @@ void Player::attack() {
 			temp = att->get_neighbors();
 			vector<Territory*> neighbors;
 			for (int i = 0; i < temp.size(); i++) {
-				if (temp[i]->get_owner()->getPID().compare(PlayerID) != 0) {
+//				if (temp[i]->get_owner()->getPID().compare(PlayerID) != 0) {
+				if (temp[i]->get_owner()->getPID() != PlayerID) {
 					neighbors.push_back(temp[i]);
 				}
 			}
@@ -172,9 +177,12 @@ void Player::fight(Territory* att, Territory* def) {
 
 	for (int i = 0; i < 3; i++) {
 		if ((attDice.currentResult[i] != 0 ) && (defDice.currentResult[i] != 0 ))
-			if ((attDice.currentResult[i]) > (defDice.currentResult[i])) def->set_troops(def->get_troops() - 1);
-			else if ((attDice.currentResult[i]) == (defDice.currentResult[i])) att->set_troops(att->get_troops() - 1);
-			else (att->set_troops(att->get_troops() - 1));
+			if ((attDice.currentResult[i]) > (defDice.currentResult[i]))
+				def->set_troops(def->get_troops() - 1);
+			else if ((attDice.currentResult[i]) == (defDice.currentResult[i]))
+				att->set_troops(att->get_troops() - 1);
+			else
+				(att->set_troops(att->get_troops() - 1));
 	}
 
 	cout << "Fighting finished !" << endl << "The attacting country "<<att->get_name() <<" now has " << att->get_troops() << " armies." << endl
@@ -213,4 +221,12 @@ void Player::movingArmy() {
 		}
 		break;
 	}
+}
+
+Territory* Player::get_controlled() {
+	return controlled[0];
+}
+
+int Player::get_number_controlled() {
+	return this->controlled.size();
 }

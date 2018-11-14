@@ -15,6 +15,8 @@ namespace driver {
     int startup_driver();
     int main_game_driver();
     int attack_driver();
+    int reinforcement_driver();
+    int fortification_driver();
 }
 
 #endif //RISK_DRIVER_H

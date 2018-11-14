@@ -18,7 +18,7 @@ Payload* Start::start(string path, int players) {
 
     vector<Player*>* playerVector = new vector<Player*>();
     for (int i = 0; i < players; i++) {
-        playerVector->push_back(new Player(i + 1));
+        playerVector->push_back(new Player(to_string(i + 1)));
     }
 
     vector<string>* territories = new vector<string>();

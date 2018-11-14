@@ -61,7 +61,7 @@ int driver::startup_driver() {
     for (auto &player : players) {
         cout << "Player " << player->getPID() << ":" << endl;
         for (auto &territory : player->get_own_territories()) {
-            cout << territory.get_name() << " has " << territory.get_troops() << " armies" << endl;
+            cout << territory->get_name() << " has " << territory->get_troops() << " armies" << endl;
         }
         cout << "\n";
     }
