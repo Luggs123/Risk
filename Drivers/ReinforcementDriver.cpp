@@ -3,13 +3,14 @@
 #include "../Deck/Deck.h"
 #include "../Deck/Deck.h"
 #include "../Phase/Reinforcement.h"
+#include "../Player/Player.h"
 #include "Driver.h"
 
 using namespace std;
 
 int driver::reinforcement_driver() {
     std::string mapFile;
-    mapFile = "World.map";
+    mapFile = "./MapTemplates/World.map";
     MapLoader ml;
     Map* worldMap = ml.get_map(mapFile);//load a map
     cout << "default map loaded." << endl << endl;
@@ -31,10 +32,11 @@ int driver::reinforcement_driver() {
     } while (t);
 
     for (int i = 0; i < owned; i++) {
-        P->addTerritory(*(worldMap->territories[i]));
+        P->add_territory(*(worldMap->territories[i]));
         //worldMap->territories[i]->set_owner(P);
     }
     int c = 3;
+    Reinforcement reinforcement(*P);
     do {
         cout<<endl<<endl<<"------------------------------------------------------" <<endl
             << "Please select the function to run. 1 for reinforcement 0 to exit" << endl;
@@ -44,7 +46,7 @@ int driver::reinforcement_driver() {
                 break;
             case 1:
                 cout << "calling reinforcement" << endl;
-                Reinforcement(*P, *worldMap);
+                reinforcement.run_reinforcement(*worldMap);
                 break;
             default:
                 cout << "invalid input, please choose again" << endl;

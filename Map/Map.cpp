@@ -7,6 +7,7 @@
 // Constructor
 Territory::Territory(std::string name) {
 	this->name = name;
+	this->troops = 0;
 }
 
 // Accessors

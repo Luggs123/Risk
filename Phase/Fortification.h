@@ -1,7 +1,8 @@
 #pragma once
 #include "../Map/Map.h"
 #include "../Deck/Hand.h"
-#include "../Player/Player.h"
+
+class Player;
 
 class Fortification {
 private:

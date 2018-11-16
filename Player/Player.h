@@ -8,6 +8,8 @@
 #include "../Dice/Dice.h"
 #include "../Map/Map.h"
 #include "../Deck/Hand.h"
+#include "../Phase/Fortification.h"
+#include "../Phase/Reinforcement.h"
 
 class Player {
 
@@ -22,7 +24,8 @@ private:
     int free_troops;//the number of troops player can placed as they want
     Hand* card_on_hand; //the Object that takes the player's cards on hand
     Dice D;// the DICE Object for the player
-
+	Reinforcement* reinforcement = nullptr;
+    Fortification* fortification = nullptr;
 
 public:
 	Player();
@@ -34,13 +37,13 @@ public:
 	int getPID();
     void set_name(std::string n);
     void show_name();
-	void setFree_Troops(int num);
-	int getFree_troops();
+	void set_free_troops(int num);
+	int get_free_troops();
 	void showcardsonHand();
 
-	void addTerritory(Territory &x);//add new territory that Player just occupied
-	//void loseTerritory(Territory &x);//remove the territory that Player just lose
-	void showTerritory();
+	void add_territory(Territory &x);//add new territory that Player just occupied
+	void lose_territory(Territory &x);//remove the territory that Player just lose
+	void show_territory();
 	void attackroll();
 	void defenceroll();
     std::vector<Territory*>& get_own_territories();

@@ -39,27 +39,27 @@ int driver::main_game_driver()
     // Setup for list of players
     Player playerA;
     playerA.setPID(1);
-    playerA.addTerritory(t1);
-    playerA.addTerritory(t2);
-    playerA.addTerritory(t3);
+    playerA.add_territory(t1);
+    playerA.add_territory(t2);
+    playerA.add_territory(t3);
 
     Player playerB;
     playerB.setPID(2);
-    playerB.addTerritory(t4);
-    playerB.addTerritory(t5);
-    playerB.addTerritory(t6);
+    playerB.add_territory(t4);
+    playerB.add_territory(t5);
+    playerB.add_territory(t6);
 
     Player playerC;
     playerC.setPID(3);
-    playerC.addTerritory(t7);
-    playerC.addTerritory(t8);
-    playerC.addTerritory(t9);
+    playerC.add_territory(t7);
+    playerC.add_territory(t8);
+    playerC.add_territory(t9);
 
     Player playerD;
     playerD.setPID(4);
-    playerD.addTerritory(t10);
-    playerD.addTerritory(t11);
-    playerD.addTerritory(t12);
+    playerD.add_territory(t10);
+    playerD.add_territory(t11);
+    playerD.add_territory(t12);
 
     vector<Player*> players;
     players.emplace_back(&playerA);
@@ -70,7 +70,7 @@ int driver::main_game_driver()
     cout << "***** Before main game loop *****" << endl;
     for (auto &player : players) {
         cout << "Player " << player->getPID() << endl;
-        player->showTerritory();
+        player->show_territory();
         cout << "\n";
     }
     cout << "\n";
@@ -82,7 +82,7 @@ int driver::main_game_driver()
     cout << "***** After main game loop *****" << endl;
     for (auto &player : players) {
         cout << "Player " << player->getPID() << endl;
-        player->showTerritory();
+        player->show_territory();
         cout << "\n";
     }
 }

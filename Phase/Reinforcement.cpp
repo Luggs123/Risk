@@ -1,4 +1,5 @@
 #include "Reinforcement.h"
+#include "../Player/Player.h"
 
 using namespace std;
 
@@ -6,10 +7,9 @@ Reinforcement::Reinforcement() {
     this->num_troop = 0;
 }
 
-Reinforcement::Reinforcement(Player &p, Map &ma) {
+Reinforcement::Reinforcement(Player &p) {
     this->ptemp = &p;
     this->num_troop = 0;
-    run_reinforcement(ma);
 }
 
 void Reinforcement::run_reinforcement(Map &ma) {
@@ -21,8 +21,16 @@ void Reinforcement::run_reinforcement(Map &ma) {
         this->check_continent(ma);
         this->reinforce();
     }
+}
 
-
+void Reinforcement::run_reinforcement() {
+    num_controlled = ptemp->get_number_controlled();
+    if (num_controlled == 0)
+        cout << "no controlled Territory" << endl;
+    else {
+        this->cal_num_troop();
+        this->reinforce();
+    }
 }
 
 void Reinforcement::cal_num_troop() {

@@ -8,7 +8,7 @@
 int driver::map_loader_driver() {
     MapLoader ml;
     std::string map_file;
-    map_file = "World.map";
+    map_file = "./MapTemplates/World.map";
     Map* world_map = ml.get_map(map_file);
 
     for (Continent* c : world_map->continents) {

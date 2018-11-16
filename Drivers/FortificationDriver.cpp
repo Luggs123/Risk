@@ -2,6 +2,7 @@
 #include "../Map/MapLoader.h"
 #include "../Deck/Deck.h"
 #include "../Dice/Dice.h"
+#include "../Player/Player.h"
 
 #include "../Phase/Fortification.h"
 #include "Driver.h"
@@ -10,7 +11,7 @@ using namespace std;
 
 int driver::fortification_driver() {
     std::string mapFile;
-    mapFile = "World.map";
+    mapFile = "./MapTemplates/World.map";
     MapLoader ml;
     Map* worldMap = ml.get_map(mapFile);//load a map
     cout << "default map loaded." << endl << endl;
@@ -33,7 +34,7 @@ int driver::fortification_driver() {
     } while (t);
 
     for (int i = 0; i < owned; i++) {
-        P->addTerritory(*(worldMap->territories[i]));
+        P->add_territory(*(worldMap->territories[i]));
         //worldMap->territories[i]->set_owner(P);
         (P->get_controlled()+i)->set_troops(8);
     }

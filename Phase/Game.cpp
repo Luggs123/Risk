@@ -50,7 +50,7 @@ void Game::execute_main_game_loop(vector<Player*> &players, vector<Territory*> &
 
                     if (i == 0) {
                         for (auto &territory : territories) {
-                            players[i]->addTerritory(*territory);
+                            players[i]->add_territory(*territory);
                         }
                     }
                 }

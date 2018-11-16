@@ -29,11 +29,11 @@ int driver::player_driver() {
     for (unsigned int i = 0; i < 5; i++) {
         s.push_back( "Territory No." + std::to_string(i));
         tempt = new Territory(s[i]);
-        Players[1].addTerritory(*tempt);
+        Players[1].add_territory(*tempt);
     }
 
     cout << "Player1 now owned 5 territories. Displaying names :" << endl;
-    Players[1].showTerritory();
+    Players[1].show_territory();
     cout << "\n-----------------------\n" << endl;
 
     Players[1].showcardsonHand();

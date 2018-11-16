@@ -6,7 +6,6 @@
 
 using namespace std;
 
-//TODO: contructor used in this driver is inconsistent with the constructors in the Player and Territory. NEED TO SORT THIS OUT
 int driver::attack_driver() {
     /*
     Player* p1 = new Player("Mark");
@@ -47,7 +46,7 @@ int driver::attack_driver() {
     p2->addTerritory(me);
     p2->addTerritory(ger);
     p2->addTerritory(uk);
-    p2->addTerritory(cn);
+    p2->add_territory(cn);
 
 
     cout << "Testing for 2 players." << endl;

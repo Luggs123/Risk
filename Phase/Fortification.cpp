@@ -1,4 +1,5 @@
 #include "Fortification.h"
+#include "../Player/Player.h"
 
 using namespace std;
 

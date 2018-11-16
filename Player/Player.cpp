@@ -17,6 +17,8 @@ Player::Player(string n) {
 
 Player::~Player() {
 	delete this->card_on_hand;
+	delete this->fortification;
+	delete this->reinforcement;
 }
 
 void Player::setPID(int id) {this->PlayerID = id;}
@@ -25,14 +27,14 @@ int Player::getPID() { return this->PlayerID; }
 void Player::set_name(string n) { this->player_name = n; }
 void Player::show_name() { cout << this->player_name << " "; }
 
-void Player::setFree_Troops(int num) { this->free_troops = num; }
-int Player::getFree_troops() { return this->free_troops; }
+void Player::set_free_troops(int num) { this->free_troops = num; }
+int Player::get_free_troops() { return this->free_troops; }
 
 void Player::showcardsonHand() { this->card_on_hand->display_cards(); }
 
-void Player::addTerritory(Territory &x) { this->controlled.push_back(&x); }
-//void Player::loseTerritory(Territory &x){}
-void Player::showTerritory() {
+void Player::add_territory(Territory &x) { this->controlled.push_back(&x); }
+//void Player::lose_territory(Territory &x){}
+void Player::show_territory() {
 	for (unsigned int i = 0; i < this->controlled.size(); i++) {
 		cout << controlled[i]->get_name() << "  ";
 	}
@@ -77,16 +79,10 @@ void Player::round() {
 
 void Player::reinforce(){
 	cout << "This is the reinforce method" << endl;
-	//determine the number of troops to reinforce
+	if (this->reinforcement == nullptr)
+		this->reinforcement = new Reinforcement(*this);
 
-	//(check) tard in cards?
-	//this->showcardsonHand();//show the cards on hand
-	//cardOnHand.exchange();//
-
-	//placing troops
-
-	//end reinforce and call attack
-
+	this->reinforcement->run_reinforcement();
 }
 
 void Player::attack() {
@@ -94,7 +90,7 @@ void Player::attack() {
 	Territory* def;
 
 	cout << "choose your countries to attack from." << endl;
-	this->showTerritory(); cout << endl;
+	this->show_territory(); cout << endl;
 	int choice;
 	cin >> choice;
 	if ((choice >= 1) && (choice <= controlled.size())) {
@@ -127,12 +123,12 @@ void Player::attack() {
 }
 
 void Player::fortify() {
-	cout << "This is the ofrtify method" << endl;
-	//get info of territories & dicide if Player will move his troops
+	cout << "This is the fortify method" << endl;
 
+	if (this->fortification == nullptr)
+		this->fortification = new Fortification(*this);
 
-	//get a card from Deck and end fortify. let main friver to call the next Player to start his round
-	//this->cardOnHand.placeCardInHand();
+	this->fortification->fortificate();
 }
 
 vector<Territory*>& Player::get_own_territories() {
@@ -143,8 +139,8 @@ void Player::add_troops(int index, int troop) {
     int current_troops = this->controlled[index]->get_troops();
     this->controlled[index]->set_troops(current_troops + troop);
 
-    int current_free_troops = this->getFree_troops();
-    this->setFree_Troops(current_free_troops - troop);
+    int current_free_troops = this->get_free_troops();
+    this->set_free_troops(current_free_troops - troop);
 }
 
 void Player::fight(Territory* att, Territory* def) {
@@ -191,7 +187,7 @@ void Player::fight(Territory* att, Territory* def) {
 	if (def->get_troops() == 0) {
 		cout << "Defending country " << def->get_name() << " has no army now, it now belongs to "<<att->get_owner()->getPID()<<endl;
 		def->set_owner(att->get_owner());
-		this->addTerritory(*def);
+		this->add_territory(*def);
 	}
 
 }

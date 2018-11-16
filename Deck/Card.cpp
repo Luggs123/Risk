@@ -4,7 +4,7 @@
 
 #include "Card.h"
 
-std::string Card::types[] = {"INFANTRY", "ARTILLERY", "CAVALRY"}; //TODO: global variable bad practice ?!
+std::string Card::types[] = {"INFANTRY", "ARTILLERY", "CAVALRY"};
 
 Card::Card(int val, const std::string &territoryStr) : card_type(val), territory(territoryStr) { }
 
