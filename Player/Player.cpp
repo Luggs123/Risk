@@ -35,6 +35,13 @@ void Player::executeStrategy() {
 void Player::setPID(string &id) {this->player_id = id;}
 string& Player::getPID() { return this->player_id; }
 
+int Player::get_troops(Territory &x) {
+	return x.get_troops();
+}
+void Player::add_troops(Territory &x, int n) {
+	x.set_troops(x.get_troops() + n);
+}
+
 void Player::set_free_troops(int num) { this->free_troops = num; }
 int Player::get_free_troops() { return this->free_troops; }
 
@@ -226,9 +233,7 @@ void Player::movingArmy() {
 	}
 }
 
-Territory* Player::get_controlled() {
-	return controlled[0];
-}
+
 
 int Player::get_number_controlled() {
 	return this->controlled.size();

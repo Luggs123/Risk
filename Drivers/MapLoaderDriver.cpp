@@ -20,4 +20,7 @@ int driver::map_loader_driver() {
     }
 
     std::cout << "Map: " << world_map->is_connected();
+
+	system("PAUSE");
+	return 0;
 }

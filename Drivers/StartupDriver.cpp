@@ -61,4 +61,7 @@ int driver::startup_driver() {
         }
         cout << "\n";
     }
+
+	system("PAUSE");
+	return 0;
 }

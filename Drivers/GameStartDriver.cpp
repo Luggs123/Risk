@@ -23,4 +23,7 @@ int driver::game_start_driver() {
          << " cards." << endl;
 
     cout << "Trying to do anything with europe_game pretty much just breaks everything." << endl;
+
+	system("PAUSE");
+	return 0;
 }
