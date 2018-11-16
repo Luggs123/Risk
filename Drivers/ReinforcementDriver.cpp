@@ -32,7 +32,7 @@ int driver::reinforcement_driver() {
     } while (t);
 
     for (int i = 0; i < owned; i++) {
-        P->add_territory(*(worldMap->territories[i]));
+        P->add_territory(worldMap->territories[i]);
         //worldMap->territories[i]->set_owner(P);
     }
     int c = 3;

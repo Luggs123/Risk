@@ -9,17 +9,13 @@
 // Driver for the startup phase
 int driver::startup_driver() {
     // Setup for list of players
-    Player playerA;
-    playerA.setPID(1);
+    Player playerA("1");
 
-    Player playerB;
-    playerB.setPID(2);
+    Player playerB("2");
 
-    Player playerC;
-    playerC.setPID(3);
+    Player playerC("3");
 
-    Player playerD;
-    playerD.setPID(4);
+    Player playerD("4");
 
     vector<Player*> players;
     players.emplace_back(&playerA);

@@ -10,6 +10,7 @@
 #include "../Deck/Hand.h"
 #include "../Phase/Fortification.h"
 #include "../Phase/Reinforcement.h"
+#include "../PlayerStrategy/Strategy.h"
 
 class Player {
 
@@ -19,13 +20,13 @@ private:
 	int get_troops(/*Territory*/int &x);// TODO: get the amount of troops for a specific territory
 	std::vector<Territory*> controlled;// a vector of Territories owned by Player
 
-    int PlayerID;
-    std::string player_name;
+    std::string player_id;
     int free_troops;//the number of troops player can placed as they want
     Hand* card_on_hand; //the Object that takes the player's cards on hand
     Dice D;// the DICE Object for the player
 	Reinforcement* reinforcement = nullptr;
     Fortification* fortification = nullptr;
+    Strategy* strategy;
 
 public:
 	Player();
@@ -33,15 +34,13 @@ public:
 	~Player();
 	void round();
 
-	void setPID(int ID);
-	int getPID();
-    void set_name(std::string n);
-    void show_name();
+	void setPID(std::string &id);
+	std::string& getPID();
 	void set_free_troops(int num);
 	int get_free_troops();
 	void showcardsonHand();
 
-	void add_territory(Territory &x);//add new territory that Player just occupied
+	void add_territory(Territory* x);//add new territory that Player just occupied
 	void lose_territory(Territory &x);//remove the territory that Player just lose
 	void show_territory();
 	void attackroll();
@@ -58,4 +57,10 @@ public:
 
     Territory* get_controlled();
     int get_number_controlled();
+
+    Player(std::string id,Strategy* init);
+    void setStrategy(Strategy *newStrategy);
+    void executeStrategy();
+
+    void reinforceToWeak();
 };

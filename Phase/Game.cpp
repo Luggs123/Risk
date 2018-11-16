@@ -13,11 +13,11 @@
 void Game::execute_main_game_loop(vector<Player*> &players, vector<Territory*> &territories, bool isTest = false)
 {
     bool game_continue = true;
-    int winner_id = -1;
+    string winner_id = "";
 
     do {
         for (auto &player : players) {
-            int player_id = player->getPID();
+            string player_id = player->getPID();
 
             if (player->get_own_territories().size() == territories.size()) {
                 winner_id = player_id;
@@ -50,7 +50,7 @@ void Game::execute_main_game_loop(vector<Player*> &players, vector<Territory*> &
 
                     if (i == 0) {
                         for (auto &territory : territories) {
-                            players[i]->add_territory(*territory);
+                            players[i]->add_territory(territory);
                         }
                     }
                 }

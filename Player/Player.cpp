@@ -3,14 +3,13 @@
 using namespace std;
 
 Player::Player() {
-    this->PlayerID = -1;
-    this->player_name = "Default Player";
+    this->player_id = "Default Player";
     this->free_troops = 0;
     this->card_on_hand = new Hand();
 }
 
 Player::Player(string n) {
-    this->player_name = n;
+    this->player_id = n;
     this->free_troops = 0;
     this->card_on_hand = new Hand();
 }
@@ -21,18 +20,27 @@ Player::~Player() {
 	delete this->reinforcement;
 }
 
-void Player::setPID(int id) {this->PlayerID = id;}
-int Player::getPID() { return this->PlayerID; }
+Player::Player(string id, Strategy* init): player_id(id) , strategy(init){
 
-void Player::set_name(string n) { this->player_name = n; }
-void Player::show_name() { cout << this->player_name << " "; }
+}
+void Player::setStrategy(Strategy *newStrategy) {
+    strategy = newStrategy;
+
+}
+void Player::executeStrategy() {
+    strategy->execute(this);
+
+}
+
+void Player::setPID(string &id) {this->player_id = id;}
+string& Player::getPID() { return this->player_id; }
 
 void Player::set_free_troops(int num) { this->free_troops = num; }
 int Player::get_free_troops() { return this->free_troops; }
 
 void Player::showcardsonHand() { this->card_on_hand->display_cards(); }
 
-void Player::add_territory(Territory &x) { this->controlled.push_back(&x); }
+void Player::add_territory(Territory* x) { this->controlled.push_back(x); }
 //void Player::lose_territory(Territory &x){}
 void Player::show_territory() {
 	for (unsigned int i = 0; i < this->controlled.size(); i++) {
@@ -103,8 +111,7 @@ void Player::attack() {
 			temp = att->get_neighbors();
 			vector<Territory*> neighbors;
 			for (int i = 0; i < temp.size(); i++) {
-//				if (temp[i]->get_owner()->getPID().compare(PlayerID) != 0) {
-				if (temp[i]->get_owner()->getPID() != PlayerID) {
+				if (temp[i]->get_owner()->getPID().compare(player_id) != 0) {
 					neighbors.push_back(temp[i]);
 				}
 			}
@@ -187,7 +194,7 @@ void Player::fight(Territory* att, Territory* def) {
 	if (def->get_troops() == 0) {
 		cout << "Defending country " << def->get_name() << " has no army now, it now belongs to "<<att->get_owner()->getPID()<<endl;
 		def->set_owner(att->get_owner());
-		this->add_territory(*def);
+		this->add_territory(def);
 	}
 
 }
@@ -195,7 +202,7 @@ void Player::fight(Territory* att, Territory* def) {
 void Player::movingArmy() {
 
 	for (;;) {
-		cout << "Player " << PlayerID << " now has:" << endl;
+		cout << "Player " << player_id << " now has:" << endl;
 		for (int i = 0; i < controlled.size(); i++) {
 			cout << "country: " <<i+1<<"."<<controlled[i]->get_name() << ". Army:" << controlled[i]->get_troops()<<endl;
 		}
@@ -211,7 +218,7 @@ void Player::movingArmy() {
 		controlled[mf - 1]->set_troops(controlled[mf - 1]->get_troops() - toMove);
 		controlled[mt - 1]->set_troops(controlled[mt - 1]->get_troops() + toMove);
 		cout << "finished moving...."<<endl;
-		cout << "Player " << PlayerID << " now has:" << endl;
+		cout << "Player " << player_id << " now has:" << endl;
 		for (int i = 0; i < controlled.size(); i++) {
 			cout << "country: " << i + 1 << "." << controlled[i]->get_name() << ". Army:" << controlled[i]->get_troops() << endl;
 		}
@@ -225,4 +232,47 @@ Territory* Player::get_controlled() {
 
 int Player::get_number_controlled() {
 	return this->controlled.size();
+}
+
+void Player::reinforceToWeak() {
+    if (controlled.size() == 0) cout << "This player now own 0 country." << endl;
+    else {
+        Territory *weakest = controlled[0];
+        int num = controlled[0]->get_troops();
+        for (int i = 0; i < controlled.size(); i++)
+            if (controlled[i]->get_troops() < num) weakest = controlled[i];
+        cout << "Now performing a reinforcement........" << endl;
+        weakest->set_troops((controlled.size() / 3) + weakest->get_troops());
+        cout << "Reinforced " << (controlled.size() / 3) << " army to " << weakest->get_name() << endl;
+
+        num = controlled[0]->get_troops();
+        for (int i = 0; i < controlled.size(); i++)
+            if (controlled[i]->get_troops() < num) weakest = controlled[i];
+
+        vector<Territory *> ally;
+        for (int i = 0; i < weakest->get_neighbors().size(); i++)
+            if (weakest->get_neighbors()[i]->get_owner()->getPID().compare(player_id) == 0)
+                ally.push_back(weakest->get_neighbors()[i]);
+        cout << "Now performing a fortification........" << endl;
+        if (ally.size() == 0) cout << weakest->get_name() << " has no ally neighbors, fortification failed." << endl;
+        else {
+            Territory *strongest = ally[0];
+            for (int i = 0; i < ally.size(); i++)
+                if (ally[i]->get_troops() > strongest->get_troops())
+                    strongest = ally[i];
+            if (strongest->get_troops() < 2) { cout << "ally countries has no enough army to fortify." << endl; }
+            else {
+                while (weakest->get_troops() < strongest->get_troops()) {
+                    strongest->set_troops(strongest->get_troops() - 1);
+                    weakest->set_troops(weakest->get_troops() + 1);
+                }
+                cout << "Fortification finished, now the player " << player_id << " has the following:" << endl;
+                for (int i = 0; i < controlled.size(); i++) {
+                    cout << controlled[i]->get_name() << ": " << controlled[i]->get_troops() << " troops." << endl;
+                }
+
+            }
+        }
+    }
+
 }

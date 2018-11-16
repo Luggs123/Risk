@@ -10,7 +10,8 @@ int main() {
 //    driver::game_start_driver();
 //    driver::startup_driver();
 //    driver::main_game_driver();
-    driver::reinforcement_driver();
+//    driver::reinforcement_driver();
 //    driver::fortification_driver();
+    driver::benevolent_strategy_driver();
     return 0;
 }

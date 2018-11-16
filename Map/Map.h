@@ -22,6 +22,7 @@ private:
 public:
 	// Constructor
 	Territory(std::string name);
+	Territory(std::string na, int trp, Player* owner);
 
 	// Accessors
 	int get_troops();

@@ -37,29 +37,25 @@ int driver::main_game_driver()
     territories.emplace_back(&t12);
 
     // Setup for list of players
-    Player playerA;
-    playerA.setPID(1);
-    playerA.add_territory(t1);
-    playerA.add_territory(t2);
-    playerA.add_territory(t3);
+    Player playerA("1");
+    playerA.add_territory(&t1);
+    playerA.add_territory(&t2);
+    playerA.add_territory(&t3);
 
-    Player playerB;
-    playerB.setPID(2);
-    playerB.add_territory(t4);
-    playerB.add_territory(t5);
-    playerB.add_territory(t6);
+    Player playerB("2");
+    playerB.add_territory(&t4);
+    playerB.add_territory(&t5);
+    playerB.add_territory(&t6);
 
-    Player playerC;
-    playerC.setPID(3);
-    playerC.add_territory(t7);
-    playerC.add_territory(t8);
-    playerC.add_territory(t9);
+    Player playerC("3");
+    playerC.add_territory(&t7);
+    playerC.add_territory(&t8);
+    playerC.add_territory(&t9);
 
-    Player playerD;
-    playerD.setPID(4);
-    playerD.add_territory(t10);
-    playerD.add_territory(t11);
-    playerD.add_territory(t12);
+    Player playerD("4");
+    playerD.add_territory(&t10);
+    playerD.add_territory(&t11);
+    playerD.add_territory(&t12);
 
     vector<Player*> players;
     players.emplace_back(&playerA);

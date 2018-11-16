@@ -14,7 +14,8 @@ int driver::player_driver() {
 
     for (unsigned int i = 0; i < 5;i++) {
         t = new Player();
-        t->setPID(i);
+        string pid = "player_" + to_string(i);
+        t->setPID(pid);
         Players.push_back(*t);
     }
     cout << "Displaying Player ID" << endl;
@@ -29,7 +30,7 @@ int driver::player_driver() {
     for (unsigned int i = 0; i < 5; i++) {
         s.push_back( "Territory No." + std::to_string(i));
         tempt = new Territory(s[i]);
-        Players[1].add_territory(*tempt);
+        Players[1].add_territory(tempt);
     }
 
     cout << "Player1 now owned 5 territories. Displaying names :" << endl;

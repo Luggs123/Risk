@@ -10,6 +10,12 @@ Territory::Territory(std::string name) {
 	this->troops = 0;
 }
 
+Territory::Territory(std::string na, int trp, Player* owner) {
+	name = na;
+	troops = trp;
+	this->set_owner(owner);
+}
+
 // Accessors
 int Territory::get_troops() {
 	return this->troops;

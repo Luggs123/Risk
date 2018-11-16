@@ -28,7 +28,7 @@ void Startup::assign_countries(vector<Player*> &players, vector<Territory*> &ter
         if (index == players.size())
             index = 0;
 
-        players[index]->add_territory(*territory);
+        players[index]->add_territory(territory);
         index++;
     }
 }
