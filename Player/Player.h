@@ -64,4 +64,8 @@ public:
     void executeStrategy();
 
     void reinforceToWeak();
+
+	void reinforce_strongest();
+	void attack_with_strongest();
+	void fortify_strongest();
 };
