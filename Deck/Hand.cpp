@@ -2,6 +2,7 @@
 // Created by Michael Wu on 2018-10-04.
 //
 
+#include <functional>
 #include "Hand.h"
 #include "Card.h"
 #include "Deck.h"
