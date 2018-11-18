@@ -7,11 +7,11 @@ int main() {
 //    driver::map_loader_driver();
 //    driver::player_driver();
 //    driver::deck_driver();
-//    driver::game_start_driver();
+    driver::game_start_driver();
 //    driver::startup_driver();
 //    driver::main_game_driver();
 //    driver::reinforcement_driver();
 //    driver::fortification_driver();
-    driver::benevolent_strategy_driver();
+//    driver::benevolent_strategy_driver();
     return 0;
 }

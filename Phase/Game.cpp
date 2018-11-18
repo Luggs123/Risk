@@ -10,10 +10,10 @@
  * @param territories
  * @param isTest
  */
-void Game::execute_main_game_loop(vector<Player*> &players, vector<Territory*> &territories, bool isTest = false)
+void Game::execute_main_game_loop(vector<Player*> &players, vector<Territory*> &territories)
 {
     bool game_continue = true;
-    string winner_id = "";
+    string winner_id;
 
     do {
         for (auto &player : players) {
@@ -28,33 +28,15 @@ void Game::execute_main_game_loop(vector<Player*> &players, vector<Territory*> &
             cout << "Player " << player->getPID() << " turn" << endl;
 
             cout << "Reinforcement phase" << endl;
-            //TODO: call reinforcment phase
+            player->reinforce();
 
             cout << "Attack phase" << endl;
-            //TODO: call attack phase
+            player->attack();
 
             cout << "Fortification phase" << endl;
-            //TODO: call fortification phase
+            player->fortify();
 
             cout << "\n";
-        }
-
-        //remove this if block, only used for demo purposes
-        if (isTest) {
-            string user_input;
-            getline(cin, user_input);
-
-            if (user_input == "end") {
-                for (int i = 0; i < players.size(); i++) {
-                    players[i]->get_own_territories().clear();
-
-                    if (i == 0) {
-                        for (auto &territory : territories) {
-                            players[i]->add_territory(territory);
-                        }
-                    }
-                }
-            }
         }
     } while (game_continue);
 

@@ -72,7 +72,7 @@ int driver::main_game_driver()
     cout << "\n";
 
     cout << "***** Main game loop *****" << endl;
-    Game::execute_main_game_loop(players, territories, true);
+    Game::execute_main_game_loop(players, territories);
     cout << "\n";
 
     cout << "***** After main game loop *****" << endl;
