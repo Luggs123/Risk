@@ -100,4 +100,7 @@ int driver::map_driver()
     //	}
     //	std::cout << std::endl;
     //}
+
+	system("PAUSE");
+	return 0;
 }

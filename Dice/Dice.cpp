@@ -77,7 +77,7 @@ void Dice::sortResult() {
                 currentResult[i] = currentResult[j];
                 currentResult[j] = temp;
             }
-    cout << "sorted amries: ";
+    cout << "sorted armies: ";
     for (int i = 0; i < currentRolled; i++) cout << currentResult[i]<<" ";
     cout << endl;
 }

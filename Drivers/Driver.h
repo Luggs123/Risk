@@ -18,6 +18,8 @@ namespace driver {
     int reinforcement_driver();
     int fortification_driver();
     int benevolent_strategy_driver();
+	int aggressive_strategy_driver();
+	int human_strategy_driver();
 }
 
 #endif //RISK_DRIVER_H

@@ -9,7 +9,7 @@ class Reinforcement {
 private:
     Player * ptemp;
     int num_troop;
-    Territory * controlled;
+	std::vector<Territory*> controlled;
     int num_controlled;
 
     void check_continent(Map &ma);

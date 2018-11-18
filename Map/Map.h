@@ -20,7 +20,8 @@ private:
 	std::vector<Territory*> neighbors;
 
 public:
-	// Constructor
+	// Constructors
+	Territory();
 	Territory(std::string name);
 	Territory(std::string na, int trp, Player* owner);
 

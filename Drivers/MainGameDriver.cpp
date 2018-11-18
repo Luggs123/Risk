@@ -81,4 +81,7 @@ int driver::main_game_driver()
         player->show_territory();
         cout << "\n";
     }
+
+	system("PAUSE");
+	return 0;
 }

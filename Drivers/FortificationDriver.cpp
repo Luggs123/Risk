@@ -36,7 +36,8 @@ int driver::fortification_driver() {
     for (int i = 0; i < owned; i++) {
         P->add_territory(worldMap->territories[i]);
         //worldMap->territories[i]->set_owner(P);
-        (P->get_controlled()+i)->set_troops(8);
+        //(P->get_controlled()+i)->set_troops(8);
+		(P->get_own_territories())[i]->set_troops(8);
     }
     int c = 3;
     do {

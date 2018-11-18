@@ -34,7 +34,7 @@ void Reinforcement::run_reinforcement() {
 }
 
 void Reinforcement::cal_num_troop() {
-    this->controlled = this->ptemp->get_controlled();
+	this->controlled = this->ptemp->get_own_territories();
     this->num_troop = (int)(num_controlled / 3);
     if (this->num_troop < 3)
         this->num_troop = 3;
@@ -55,14 +55,14 @@ void Reinforcement::reinforce() {
         cout << "Time to reinforece your Territory." << endl
              << "You have " << this->num_troop << " troops to reinforce." << endl
              << "Please select the territory number you want to reinforce :" << endl;
-        Territory * controlled = ptemp->get_controlled();
+		this->controlled = this->ptemp->get_own_territories();
         for (int i = 0; i < this->num_controlled; i++) {
-            cout << i << ". " << (*(controlled + i)).get_name() << " with " << (*(controlled + i)).get_troops() << " troops."<<endl;
+			cout << i << ". " << (*controlled[i]).get_name() << " with " << (*controlled[i]).get_troops() << " troops." << endl;
         }
         int in;
         cin >> in;
         if (in >= 0 && in < this->num_controlled) {
-            this->add_troops((controlled + in));
+            this->add_troops(controlled[in]);
 
         }
         else

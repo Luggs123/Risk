@@ -17,7 +17,8 @@ class Player {
 private:
 	//int check_reinforceAmout();// ToDo: calculate the number of troops a Player get
 	int check_continents();// ToDo: check if this Player owned continents
-	int get_troops(/*Territory*/int &x);// TODO: get the amount of troops for a specific territory
+	int get_troops(Territory &x);// TODO: get the amount of troops for a specific territory
+	void add_troops(Territory &x, int n);
 	std::vector<Territory*> controlled;// a vector of Territories owned by Player
 
     std::string player_id;
@@ -55,7 +56,7 @@ public:
 	void fight(Territory* att, Territory* def);
 	void movingArmy();
 
-    Territory* get_controlled();
+    
     int get_number_controlled();
 
     Player(std::string id,Strategy* init);
@@ -63,4 +64,8 @@ public:
     void executeStrategy();
 
     void reinforceToWeak();
+
+	void reinforce_strongest();
+	void attack_with_strongest();
+	void fortify_strongest();
 };

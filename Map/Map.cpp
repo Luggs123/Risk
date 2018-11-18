@@ -4,7 +4,9 @@
 #include "Map.h"
 
 // ================== TERRITORY ==================
-// Constructor
+// Constructors
+Territory::Territory() {}
+
 Territory::Territory(std::string name) {
 	this->name = name;
 	this->troops = 0;

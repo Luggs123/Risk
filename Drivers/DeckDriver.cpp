@@ -97,6 +97,9 @@ int driver::deck_driver()
 
     cout << "Hand content." << endl;
     my_hand.display_cards();
+
+	system("PAUSE");
+	return 0;
 }
 
 namespace test {

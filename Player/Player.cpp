@@ -35,6 +35,13 @@ void Player::executeStrategy() {
 void Player::setPID(string &id) {this->player_id = id;}
 string& Player::getPID() { return this->player_id; }
 
+int Player::get_troops(Territory &x) {
+	return x.get_troops();
+}
+void Player::add_troops(Territory &x, int n) {
+	x.set_troops(x.get_troops() + n);
+}
+
 void Player::set_free_troops(int num) { this->free_troops = num; }
 int Player::get_free_troops() { return this->free_troops; }
 
@@ -226,9 +233,7 @@ void Player::movingArmy() {
 	}
 }
 
-Territory* Player::get_controlled() {
-	return controlled[0];
-}
+
 
 int Player::get_number_controlled() {
 	return this->controlled.size();
@@ -275,4 +280,69 @@ void Player::reinforceToWeak() {
         }
     }
 
+}
+
+// At start of turn, adds all new troops to strongest territory
+void Player::reinforce_strongest() {
+	Territory* strongest = controlled[0];
+	for (Territory* t : controlled) {
+		if (t->get_troops() > t->get_troops()) {
+			strongest = t;
+		}
+	}
+	strongest->set_troops(controlled.size() / 3 + strongest->get_troops());
+	cout << strongest->get_name() << " reinforced with " << controlled.size() / 3 << " armies." << endl;
+}
+
+// Uses strongest territory to attack an unowned target until it cannot anymore
+void Player::attack_with_strongest() {
+	Territory* strongest = controlled[0];
+	for (Territory* t : controlled) {
+		if (t->get_troops() > t->get_troops()) {
+			strongest = t;
+		}
+	}
+
+	bool has_enemies;
+	Territory* target;
+
+	while (strongest->get_troops() > 1) {
+		has_enemies = false;
+		for (Territory* n : strongest->get_neighbors()) {
+			if (n->get_owner() != this) {
+				has_enemies = true;
+				target = n;
+				break;
+			}
+		}
+
+		if (!has_enemies) {
+			break;
+		}
+
+		this->fight(strongest, target);
+	}
+}
+
+// Moves troops to the strongest owned territory
+void Player::fortify_strongest() {
+	Territory* strongest = controlled[0];
+	for (Territory* t : controlled) {
+		if (t->get_troops() > t->get_troops()) {
+			strongest = t;
+		}
+	}
+
+	Territory* strongest_neighbor;
+	int strongest_neighbor_troops = 0;
+	for (Territory* n : strongest->get_neighbors()) {
+		if (n->get_owner() == this && n->get_troops() > strongest_neighbor_troops) {
+			strongest_neighbor = n;
+			strongest_neighbor_troops = n->get_troops();
+		}
+	}
+
+	strongest_neighbor->set_troops(1);
+	strongest->set_troops(strongest->get_troops() + strongest_neighbor_troops - 1);
+	cout << strongest->get_name() << " has been fortified with " << strongest_neighbor_troops - 1 << " more armies." << endl;
 }
