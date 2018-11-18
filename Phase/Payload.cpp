@@ -16,3 +16,7 @@ std::vector<Player*>& Payload::get_players() {
 Deck& Payload::get_deck() {
     return *this->deck;
 }
+
+std::vector<View*>& Payload::get_views() {
+    return *this->views;
+}

@@ -48,7 +48,8 @@ void Startup::assign_armies(vector<Player*> &players)
             armies = 35;
             break;
         case 4:
-            armies = 30;
+//            armies = 30;
+            armies = 5;
             break;
         case 5:
             armies = 25;

@@ -11,8 +11,10 @@
 #include "../Phase/Fortification.h"
 #include "../Phase/Reinforcement.h"
 #include "../PlayerStrategy/Strategy.h"
+#include "../ObserverPattern/Subject.h"
+#include "../Phase/GamePhase.h"
 
-class Player {
+class Player : public Subject {
 
 private:
 	//int check_reinforceAmout();// ToDo: calculate the number of troops a Player get

@@ -17,8 +17,18 @@ Payload* Start::start(string path, int players) {
     }
 
     vector<Player*>* playerVector = new vector<Player*>();
-    for (int i = 0; i < players; i++) {
-        playerVector->push_back(new Player(to_string(i + 1)));
+    vector<View*>* views = new vector<View*>();
+    for (int i = 1; i <= players; i++) {
+        string user_name;
+        cout << "Player " << i << ", please enter your name." << endl;
+        getline(cin, user_name);
+
+        Player* player = new Player(user_name);
+        View* view = new View(player);
+        player->attach(view);
+
+        playerVector->push_back(player);
+        views->push_back(view);
     }
 
     vector<string>* territories = new vector<string>();
@@ -38,48 +48,48 @@ Payload* Start::prompt_start() {
     if (dir != nullptr) {
         string path;
         int players = 0;
-        vector<string> fileNames;
+        vector<string> file_names;
 
         // fetching the list of maps
         entry = readdir(dir);
         while(entry != nullptr) {
-            fileNames.emplace_back(entry->d_name);
+            file_names.emplace_back(entry->d_name);
             entry = readdir(dir);
         }
         closedir(dir);
 
         // removing entries . and ..
-        fileNames.erase(fileNames.begin());
-        fileNames.erase(fileNames.begin());
+        file_names.erase(file_names.begin());
+        file_names.erase(file_names.begin());
 
         // asking the user to choose a map
         int mapId;
         do {
             cout << "Please choose one of the following maps." << endl;
-            for (int i = 0; i < fileNames.size(); i++) {
-                cout << i << ") " << fileNames[i] << endl;
+            for (int i = 0; i < file_names.size(); i++) {
+                cout << i << ") " << file_names[i] << endl;
             }
 
-            string userInput;
-            getline(cin, userInput);
+            string user_input;
+            getline(cin, user_input);
 
             try {
-                mapId = stoi(userInput);
+                mapId = stoi(user_input);
             } catch (...) {
                 cout << "Invalid input. Please try again." << endl;
                 mapId = -1;
             }
-        } while (mapId < 0 || mapId >= fileNames.size());
-        path = "../MapTemplates/" + fileNames[mapId];
+        } while (mapId < 0 || mapId >= file_names.size());
+        path = "../MapTemplates/" + file_names[mapId];
 
         // asking for the number of players
         do {
             cout << "How many players will be participating? (2-6)" << endl;
-            string userInput;
-            getline(cin, userInput);
+            string user_input;
+            getline(cin, user_input);
 
             try {
-                players = stoi(userInput);
+                players = stoi(user_input);
             } catch (...) {
                 cout << "That is not a valid amount of players. Please try again." << endl;
                 players = 0;

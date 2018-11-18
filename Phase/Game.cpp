@@ -25,15 +25,10 @@ void Game::execute_main_game_loop(vector<Player*> &players, vector<Territory*> &
                 break;
             }
 
-            cout << "Player " << player->getPID() << " turn" << endl;
-
-            cout << "Reinforcement phase" << endl;
             player->reinforce();
 
-            cout << "Attack phase" << endl;
             player->attack();
 
-            cout << "Fortification phase" << endl;
             player->fortify();
 
             cout << "\n";

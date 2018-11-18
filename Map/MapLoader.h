@@ -16,7 +16,6 @@ private:
 	std::vector<Continent*> continents;
 
 public:
-    ~MapLoader();
 	Continent* parse_continent(std::string line);
 	Territory* create_territories(std::string line);
 	Continent* find_continent(std::string name);

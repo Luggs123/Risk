@@ -144,13 +144,3 @@ Map* MapLoader::get_map(std::string map) {
 
 	return worldMap;
 }
-
-MapLoader::~MapLoader() {
-    for (Territory* t : this->territories) {
-        delete t;
-    }
-
-    for (Continent* c : this->continents) {
-        delete c;
-    }
-}

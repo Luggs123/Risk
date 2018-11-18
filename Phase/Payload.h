@@ -11,12 +11,14 @@
 #include "../Deck/Card.h"
 #include "../Deck/Deck.h"
 #include "../Deck/Hand.h"
+#include "../View/View.h"
 
 // A payload of objects to be used by other game phases
 class Payload {
 private:
     Map* map;
     std::vector<Player*>* players;
+    std::vector<View*>* views;
     Deck* deck;
 
 public:
@@ -27,6 +29,7 @@ public:
     Map& get_map();
     std::vector<Player*>& get_players();
     Deck& get_deck();
+    std::vector<View*>& get_views();
 };
 
 #endif

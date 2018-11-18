@@ -93,7 +93,7 @@ void Player::round() {
 }
 
 void Player::reinforce(){
-	cout << "This is the reinforce method" << endl;
+    notify(GamePhase::REINFORCEMENT);
 	if (this->reinforcement == nullptr)
 		this->reinforcement = new Reinforcement(*this);
 
@@ -101,43 +101,54 @@ void Player::reinforce(){
 }
 
 void Player::attack() {
+	notify(GamePhase::ATTACK);
 	Territory* att;
 	Territory* def;
+	bool invalid_input = true;
 
-	cout << "choose your countries to attack from." << endl;
-	this->show_territory(); cout << endl;
-	int choice;
-	cin >> choice;
-	if ((choice >= 1) && (choice <= controlled.size())) {
-		att = controlled[choice - 1];
-		if (att->get_troops() < 2) { cout << "This country has less than 2 armies. Back to main menu."; }
-		else
-		{
-			cout << "choose a neighbor to attack: ";
-			vector<Territory*> temp;
-			temp = att->get_neighbors();
-			vector<Territory*> neighbors;
-			for (int i = 0; i < temp.size(); i++) {
-				if (temp[i]->get_owner()->getPID().compare(player_id) != 0) {
-					neighbors.push_back(temp[i]);
-				}
-			}
-			for (int i=0;i<neighbors.size();i++) cout << (i + 1) << ". " << neighbors[i]->get_name() << " ";
-			int num;
-			cin >> num;
-			num--;
-			if ((num > (neighbors.size() - 1)) || (num < 0)) cout << "invalid index.";
-			else {
-				def = neighbors[num];
-				this->fight(att, def);
-			}
-		}
-	}
+	while (invalid_input) {
+        cout << "choose your countries to attack from." << endl;
 
+        for (int i = 0; i < controlled.size(); i++) {
+            cout << i << ". " << controlled[i]->get_name() << endl;
+        }
+
+        int choice;
+        cin >> choice;
+        if ((choice >= 0) && (choice < controlled.size())) {
+            att = controlled[choice];
+            if (att->get_troops() < 2) {
+                cout << "This country has less than 2 armies. Back to main menu." << endl;
+            } else {
+                cout << "choose a neighbor to attack: " << endl;
+                vector<Territory *> temp;
+                temp = att->get_neighbors();
+                vector<Territory *> neighbors;
+                for (int i = 0; i < temp.size(); i++) {
+                    if (temp[i]->get_owner()->getPID().compare(player_id) != 0) {
+                        neighbors.push_back(temp[i]);
+                    }
+                }
+                for (int i = 0; i < neighbors.size(); i++) {
+                    cout << (i + 1) << ". " << neighbors[i]->get_name() << " ";
+                }
+                int num;
+                cin >> num;
+                num--;
+                if ((num > (neighbors.size() - 1)) || (num < 0)) {
+                    cout << "invalid index.";
+                } else {
+                    invalid_input = false;
+                    def = neighbors[num];
+                    this->fight(att, def);
+                }
+            }
+        }
+    }
 }
 
 void Player::fortify() {
-	cout << "This is the fortify method" << endl;
+    notify(GamePhase::FORTIFY);
 
 	if (this->fortification == nullptr)
 		this->fortification = new Fortification(*this);

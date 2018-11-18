@@ -9,6 +9,7 @@
 #include "dirent.h"
 
 #include "../Map/MapLoader.h"
+#include "../View/View.h"
 #include "Payload.h"
 
 class Start {

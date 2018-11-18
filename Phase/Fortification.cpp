@@ -12,7 +12,6 @@ Fortification::Fortification(Player &P) {
 }
 
 void Fortification::fortificate() {
-    cout << "Fortification phase started." << endl << endl;
     bool t = true;
     do {
         cout << "Please select the territory number you want to take troops from :" << endl;
