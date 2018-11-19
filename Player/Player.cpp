@@ -47,7 +47,7 @@ int Player::get_free_troops() { return this->free_troops; }
 
 void Player::showcardsonHand() { this->card_on_hand->display_cards(); }
 
-void Player::add_territory(Territory* x) { this->controlled.push_back(x); x.set_owner(this);}
+void Player::add_territory(Territory* x) { this->controlled.push_back(x); x->set_owner(this);}
 //void Player::lose_territory(Territory &x){}
 void Player::show_territory() {
 	for (unsigned int i = 0; i < this->controlled.size(); i++) {
