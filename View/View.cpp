@@ -30,24 +30,30 @@ void View::display_phase(GamePhase current_phase) {
     cout << "********** " << this->current_player->getPID() << " : " << phase << " **********" << endl;
 }
 
-void View::display_info(GamePhase current_phase) {
+void View::display_info(GamePhase current_phase, vector<string>* event_data) {
     //TODO: show relevant information depending on the phase
+    vector<string> data = *event_data;
     switch (current_phase) {
         case GamePhase::ATTACK:
-            cout << "attack info" << endl;
+            cout << "Player " << current_player->getPID() << " attacked " << data[0] << " from " << data[1] << endl;
             break;
         case GamePhase::REINFORCEMENT:
-            cout << "reinforcement info" << endl;
+            cout << "Player " << current_player->getPID() << " reinforced " << data[0] << " with " << data[1] << " troops." << endl;
             break;
         case GamePhase::FORTIFY:
-            cout << "fortify info" << endl;
+            cout << "Player " << current_player->getPID() << " fortified " << data[0] << " with " << data[1] << " troops." << endl;
             break;
         default:
             cout << "UNDEFINED PHASE" << endl;
     }
 }
 
-void View::update(GamePhase data) {
-    display_phase(data);
-    display_info(data);
+void View::update(GamePhase data, vector<string>* event_data = nullptr) {
+    cout << endl;
+    if (event_data == nullptr) {
+        display_phase(data);
+    } else {
+        display_info(data, event_data);
+    }
+    cout << endl;
 }

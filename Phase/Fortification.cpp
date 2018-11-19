@@ -48,7 +48,7 @@ bool Fortification::fortificate1(Territory* take) {
     }
 }
 
-bool Fortification::fortificate2(Territory*take, int re) {
+bool Fortification::fortificate2(Territory* take, int re) {
     int num_nei = take->get_neighbors().size();
     cout << "Please select the territories to send troops" << endl;
     vector<Territory*> neighbour;
@@ -75,7 +75,9 @@ bool Fortification::fortificate2(Territory*take, int re) {
     if (in > -1 && in < k) {
         neighbour[in]->set_troops(neighbour[in]->get_troops()+re);
         take->set_troops(take->get_troops() - re);
-        cout << "fortification succeed" << endl;
+
+        vector<string> data_str = {take->get_name(), to_string(re)};
+        ptemp->notify(GamePhase::FORTIFY, &data_str);
         return false;
     }
     else {

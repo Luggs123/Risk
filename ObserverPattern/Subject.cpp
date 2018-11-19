@@ -23,8 +23,8 @@ void Subject::detach(Observer *observer) {
     this->observers->remove(observer);
 }
 
-void Subject::notify(GamePhase data) {
+void Subject::notify(GamePhase data, vector<string>* event_data) {
     for (auto &observerObj : *(this->observers)) {
-        observerObj->update(data);
+        observerObj->update(data, event_data);
     }
 }

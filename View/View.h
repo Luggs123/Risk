@@ -6,7 +6,6 @@
 #define RISK_VIEW_H
 
 #include <iostream>
-#include <string>
 
 #include "../Phase/GamePhase.h"
 #include "../ObserverPattern/Observer.h"
@@ -17,11 +16,11 @@ class View : public Observer {
 private:
     Player* current_player;
     void display_phase(GamePhase current_phase);
-    void display_info(GamePhase current_phase);
+    void display_info(GamePhase current_phase, std::vector<std::string>* event_data);
 
 public:
     View(Player* player);
-    void update(GamePhase data);
+    void update(GamePhase data, std::vector<std::string>* event_data);
 };
 
 

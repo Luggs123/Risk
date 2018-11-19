@@ -117,6 +117,7 @@ void Player::attack() {
         cin >> choice;
         if ((choice >= 0) && (choice < controlled.size())) {
             att = controlled[choice];
+
             if (att->get_troops() < 2) {
                 cout << "This country has less than 2 armies. Back to main menu." << endl;
             } else {
@@ -125,12 +126,12 @@ void Player::attack() {
                 temp = att->get_neighbors();
                 vector<Territory *> neighbors;
                 for (int i = 0; i < temp.size(); i++) {
-                    if (temp[i]->get_owner()->getPID().compare(player_id) != 0) {
+//                    if (temp[i]->get_owner()->getPID().compare(player_id) != 0) {
                         neighbors.push_back(temp[i]);
-                    }
+//                    }
                 }
                 for (int i = 0; i < neighbors.size(); i++) {
-                    cout << (i + 1) << ". " << neighbors[i]->get_name() << " ";
+                    cout << (i + 1) << ". " << neighbors[i]->get_name() << " " << endl;
                 }
                 int num;
                 cin >> num;
@@ -144,6 +145,7 @@ void Player::attack() {
                 }
             }
         }
+
     }
 }
 
@@ -169,6 +171,8 @@ void Player::add_troops(int index, int troop) {
 }
 
 void Player::fight(Territory* att, Territory* def) {
+    vector<string> data_str = {def->get_name(), att->get_name()};
+    notify(GamePhase::ATTACK, &data_str);
 	int attNum = -1;
 	int	defNum = -1;
 	for (;;) {

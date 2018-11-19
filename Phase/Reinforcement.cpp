@@ -63,7 +63,6 @@ void Reinforcement::reinforce() {
         cin >> in;
         if (in >= 0 && in < this->num_controlled) {
             this->add_troops(controlled[in]);
-
         }
         else
             cout << "invalid input." << endl
@@ -79,6 +78,9 @@ void Reinforcement::add_troops(Territory* t) {
     {
         t->set_troops(t->get_troops() + re);
         this->num_troop = num_troop - re;
+
+        vector<string> data_str = {t->get_name(), to_string(re)};
+        ptemp->notify(GamePhase::REINFORCEMENT, &data_str);
     }
     else
         cout << "Invalid input. Please choose again" << endl;
