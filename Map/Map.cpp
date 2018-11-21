@@ -35,6 +35,10 @@ Player* Territory::get_owner() {
 	return this->owner;
 }
 
+Continent* Territory::get_continent() {
+	return this->continent;
+}
+
 // Mutators
 void Territory::set_troops(int troops) {
 	this->troops = troops;
@@ -47,6 +51,10 @@ void Territory::add_neighbor(Territory* t) {
 void Territory::set_owner(Player* owner) {
 	this->owner = owner;
 	notify();
+}
+
+void Territory::set_continent(Continent* con) {
+	this->continent = con;
 }
 
 // Service Methods
@@ -83,6 +91,7 @@ std::vector<Territory*> Continent::get_territories() {
 // Mutators
 void Continent::add_territory(Territory* t) {
 	this->territories.push_back(t);
+	t->set_continent(this);
 }
 
 // Service Methods
