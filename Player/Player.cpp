@@ -143,9 +143,9 @@ void Player::attack() {
                 temp = att->get_neighbors();
                 vector<Territory *> neighbors;
                 for (int i = 0; i < temp.size(); i++) {
-//                    if (temp[i]->get_owner()->getPID().compare(player_id) != 0) {
+                    if (temp[i]->get_owner()->getPID().compare(player_id) != 0) {
                         neighbors.push_back(temp[i]);
-//                    }
+                    }
                 }
                 for (int i = 0; i < neighbors.size(); i++) {
                     cout << (i + 1) << ". " << neighbors[i]->get_name() << " " << endl;

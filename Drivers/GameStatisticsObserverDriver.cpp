@@ -10,7 +10,7 @@ using namespace std;
 
 int driver::game_statics_observer_driver() {
 	std::string mapFile;
-	mapFile = "./MapTemplates/World.map";
+	mapFile = "../MapTemplates/World.map";
 	MapLoader ml;
 	Map* worldMap = ml.get_map(mapFile);//load a map
 	cout << "default map loaded." << endl << endl;
@@ -44,16 +44,13 @@ int driver::game_statics_observer_driver() {
 	cout << "---------------------------------------------------" << endl
 		<< "Ready to demonstrate Game Statics Observer" << endl
 		<< "----------------------------------------------------" << endl;
-	
-	
-
 
 	cout << "Player" << Players[0]->getPID() << " is occuping Territory " << worldMap->territories[5]->get_name() << endl
 		<< "----------------------------------------------------------------------------------------------------------" << endl << endl;
-	
+
 	worldMap->territories[5]->get_owner()->lose_territory(worldMap->territories[5]);
 	Players[0]->add_territory(worldMap->territories[5]);
-	
+
 	cout << endl << endl
 		<< "Player " << Players[2]->getPID() << " is occuping Territory " << worldMap->territories[1]->get_name() << ". Which is the only territory owned by Player " << Players[1]->getPID() << endl
 		<< "----------------------------------------------------------------------------------------------------------" << endl << endl;
