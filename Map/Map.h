@@ -12,6 +12,7 @@
 #include "../GameStaticsObserver/GameStaticsSubject.h"
 
 class Player;
+class Continent;
 
 // Defines an individual territory on the map
 class Territory : public GameStaticsSubject {//by joe
@@ -20,6 +21,7 @@ private:
 	std::string name;
 	int troops;
 	std::vector<Territory*> neighbors;
+	Continent* continent;
 
 public:
 	// Constructors
@@ -32,11 +34,13 @@ public:
 	std::string get_name();
 	std::vector<Territory*> get_neighbors();
 	Player* get_owner();
+	Continent* get_continent();
 
 	// Mutators
 	void set_troops(int troops);
 	void add_neighbor(Territory* t);
 	void set_owner(Player* owner);
+	void set_continent(Continent* continent);
 
 	// Service Methods
 	bool equals(Territory* t);
