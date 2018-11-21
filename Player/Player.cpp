@@ -48,7 +48,24 @@ int Player::get_free_troops() { return this->free_troops; }
 void Player::showcardsonHand() { this->card_on_hand->display_cards(); }
 
 void Player::add_territory(Territory* x) { this->controlled.push_back(x); x->set_owner(this);}
-//void Player::lose_territory(Territory &x){}
+
+void Player::lose_territory(Territory* x){
+	if (this->controlled.size() == 0)
+		cout << "error" << endl;
+	else {
+		for (int i = 0; i < this->controlled.size(); i++) {
+			if (!(controlled[i]->get_name().compare(x->get_name()))) {
+				vector<Territory*>::iterator iter = controlled.begin()+i;
+				controlled.erase(iter);
+				break;
+			}
+			if ((i + 1) >= controlled.size())
+				cout << "Error: Territory not found" << endl;
+
+		}
+	}
+}
+
 void Player::show_territory() {
 	for (unsigned int i = 0; i < this->controlled.size(); i++) {
 		cout << controlled[i]->get_name() << "  ";

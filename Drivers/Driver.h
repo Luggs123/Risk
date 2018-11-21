@@ -21,6 +21,7 @@ namespace driver {
 	int aggressive_strategy_driver();
 	int human_strategy_driver();
 	int phase_observer_driver();
+	int game_statics_observer_driver();
 }
 
 #endif //RISK_DRIVER_H

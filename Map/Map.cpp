@@ -46,6 +46,7 @@ void Territory::add_neighbor(Territory* t) {
 
 void Territory::set_owner(Player* owner) {
 	this->owner = owner;
+	notify();
 }
 
 // Service Methods

@@ -44,7 +44,7 @@ public:
 	void showcardsonHand();
 
 	void add_territory(Territory* x);//add new territory that Player just occupied
-	void lose_territory(Territory &x);//remove the territory that Player just lose
+	void lose_territory(Territory* x);//remove the territory that Player just lose
 	void show_territory();
 	void attackroll();
 	void defenceroll();

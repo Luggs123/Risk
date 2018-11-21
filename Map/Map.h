@@ -9,10 +9,12 @@
 #include <queue>
 #include <iostream>
 
+#include "../GameStaticsObserver/GameStaticsSubject.h"
+
 class Player;
 
 // Defines an individual territory on the map
-class Territory {
+class Territory : public GameStaticsSubject {//by joe
 private:
 	Player* owner;
 	std::string name;
