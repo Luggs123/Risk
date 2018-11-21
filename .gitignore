@@ -3,3 +3,6 @@
 *.vcxproj.*
 .vs/
 */Debug/*
+.idea/
+CMakeLists.txt
+cmake-build-debug/
