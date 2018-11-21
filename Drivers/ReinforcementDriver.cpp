@@ -17,6 +17,7 @@ int driver::reinforcement_driver() {
     int num_territory = worldMap->territories.size();
 
     Player* P = new Player("PLAYER1");//create a player
+	Player* PP = new Player("PLAYER2");
     cout << "Sample player created" << endl << endl;
     int owned;
     bool t = true;
@@ -31,9 +32,12 @@ int driver::reinforcement_driver() {
             cout << "invalid input. Please choose one again." << endl;
     } while (t);
 
-    for (int i = 0; i < owned; i++) {
+    for (int i = 0; i < num_territory; i++) {
+		if(i<owned)
         P->add_territory(worldMap->territories[i]);
-        //worldMap->territories[i]->set_owner(P);
+		else
+			PP->add_territory(worldMap->territories[i]);
+        
     }
     int c = 3;
     Reinforcement reinforcement(*P);

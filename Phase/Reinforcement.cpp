@@ -3,10 +3,12 @@
 
 using namespace std;
 
+//default constructor
 Reinforcement::Reinforcement() {
     this->num_troop = 0;
 }
 
+//constructor
 Reinforcement::Reinforcement(Player &p) {
     this->ptemp = &p;
     this->num_troop = 0;
@@ -18,17 +20,17 @@ void Reinforcement::run_reinforcement(Map &ma) {
         cout << "no controlled Territory" << endl;
     else {
         this->cal_num_troop();
-        this->check_continent(ma);
         this->reinforce();
     }
 }
+
 
 void Reinforcement::run_reinforcement() {
     num_controlled = ptemp->get_number_controlled();
     if (num_controlled == 0)
         cout << "no controlled Territory" << endl;
     else {
-        this->cal_num_troop();
+		this->cal_num_troop();
         this->reinforce();
     }
 }
@@ -36,12 +38,48 @@ void Reinforcement::run_reinforcement() {
 void Reinforcement::cal_num_troop() {
 	this->controlled = this->ptemp->get_own_territories();
     this->num_troop = (int)(num_controlled / 3);
-    if (this->num_troop < 3)
-        this->num_troop = 3;
+	if (this->num_troop < 3) {
+		this->num_troop = 3;
+	}
+	this->check_continent();
 }
 
-void Reinforcement::check_continent(Map &ma) {
-    //TODO
+void Reinforcement::check_continent() {
+	vector<Continent*> _continent;//a vector to store the continents related to current player
+	int owned_territory_num = this->ptemp->get_number_controlled();
+	//fetching the related continents 
+	for (int i = 0; i < owned_territory_num; i++) {
+		if (_continent.size() == 0) {
+			_continent.push_back((this->ptemp->get_own_territories())[i]->get_continent());
+			continue;
+		}
+		for (int j = 0; j < _continent.size(); j++) {
+				if ((_continent[j]->get_name().compare(this->ptemp->get_own_territories()[i]->get_continent()->get_name())) != 0) {
+					if ((j + 1) == _continent.size()) {
+						_continent.push_back(this->ptemp->get_own_territories()[i]->get_continent());
+						break;
+					}
+				}
+				
+			
+
+		}//for j, the No. of related continent
+	}//for i, the NO. of controlled territories
+	//checking each related continent if it is fully controlled by current player
+	for (int i = 0; i < _continent.size(); i++) {
+		for (int j = 0; j < _continent[i]->get_territories().size(); j++) {
+			if ((_continent[i]->get_territories()[j]->get_owner()->getPID().compare(this->ptemp->getPID())) != 0) {
+				break;
+			}
+			else
+			{
+				if ((j + 1) == _continent[i]->get_territories().size()) {
+					this->num_troop += _continent[i]->get_value();
+				}
+			}
+		}//for j, No. of territory in a continent
+	}//for i, No. of related continent
+
 
 }
 

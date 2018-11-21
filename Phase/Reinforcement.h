@@ -10,9 +10,9 @@ private:
     Player * ptemp;
     int num_troop;
 	std::vector<Territory*> controlled;
-    int num_controlled;
+    int num_controlled;//number of free troops to sent
 
-    void check_continent(Map &ma);
+    void check_continent();
     void cal_num_troop();
     void check_hand();
     void get_info();
