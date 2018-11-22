@@ -318,7 +318,7 @@ void Player::reinforceToWeak() {
 void Player::reinforce_strongest() {
 	Territory* strongest = controlled[0];
 	for (Territory* t : controlled) {
-		if (t->get_troops() > t->get_troops()) {
+		if (t->get_troops() > strongest->get_troops()) {
 			strongest = t;
 		}
 	}
@@ -330,7 +330,7 @@ void Player::reinforce_strongest() {
 void Player::attack_with_strongest() {
 	Territory* strongest = controlled[0];
 	for (Territory* t : controlled) {
-		if (t->get_troops() > t->get_troops()) {
+		if (t->get_troops() > strongest->get_troops()) {
 			strongest = t;
 		}
 	}
