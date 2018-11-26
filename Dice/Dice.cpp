@@ -5,7 +5,7 @@ using namespace std;
 Dice::Dice()
 {
 
-    name = "Anonymous player";
+    name = "Default player";
     totalRolled = 0;
     diceStats[1] = 0;
     diceStats[2] = 0;
