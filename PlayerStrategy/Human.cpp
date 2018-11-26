@@ -46,7 +46,7 @@ void Human::attack(Player* p) {
 				continue;
 			}
 
-			Territory *atk, *def;
+			Territory *atk=nullptr, *def=nullptr;
 			bool found = false, can_attack = false;
 			for (Territory* t : p->get_own_territories()) {
 				string name = t->get_name();
@@ -119,7 +119,7 @@ void Human::fortify(Player* p) {
 		return;
 	}
 	else {
-		Territory *origin, *target;
+		Territory *origin=nullptr, *target=nullptr;
 		cout << "Which territory would you like to transfer troops from?" << endl;
 		cin >> response;
 		transform(response.begin(), response.end(), response.begin(), ::tolower);

@@ -26,3 +26,11 @@ void Card::display_card() {
     std::cout << "Card type: " << this->get_type() << " | Card territory: " << this->get_territory() << std::endl;
 }
 
+void Card::set_deck(Deck* D) {
+	this->belongs = D;
+}
+
+Deck* Card::get_deck() {
+	return this->belongs;
+}
+

@@ -32,6 +32,10 @@ Deck::Deck(std::vector<std::string> &territory_list)
         }
     }
 
+	for (int i = 0; i < this->cards.size(); i++) {
+		cards[i].set_deck(this);
+	}
+
     //TODO: do something with the remainder, maybe implement wild cards ??
     shuffle(this->cards.begin(), this->cards.end(), generator);
 }

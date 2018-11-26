@@ -18,7 +18,7 @@ class Player : public Subject {
 
 private:
 	//int check_reinforceAmout();// ToDo: calculate the number of troops a Player get
-	int check_continents();// ToDo: check if this Player owned continents
+	//int check_continents();// ToDo: check if this Player owned continents
 	int get_troops(Territory &x);// TODO: get the amount of troops for a specific territory
 	void add_troops(Territory &x, int n);
 	std::vector<Territory*> controlled;// a vector of Territories owned by Player
@@ -42,6 +42,8 @@ public:
 	void set_free_troops(int num);
 	int get_free_troops();
 	void showcardsonHand();
+	void set_deck(Deck* D);
+	int check_hand();
 
 	void add_territory(Territory* x);//add new territory that Player just occupied
 	void lose_territory(Territory* x);//remove the territory that Player just lose

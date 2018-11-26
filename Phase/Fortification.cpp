@@ -30,6 +30,7 @@ void Fortification::fortificate() {
             cout << "invalid input." << endl
                  << "------------------------------------------" << endl;
     } while (t);
+	
 }
 
 bool Fortification::fortificate1(Territory* take) {

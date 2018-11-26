@@ -42,6 +42,7 @@ void Reinforcement::cal_num_troop() {
 		this->num_troop = 3;
 	}
 	this->check_continent();
+	this->num_troop += this->ptemp->check_hand();
 }
 
 void Reinforcement::check_continent() {

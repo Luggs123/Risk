@@ -46,6 +46,7 @@ void Player::set_free_troops(int num) { this->free_troops = num; }
 int Player::get_free_troops() { return this->free_troops; }
 
 void Player::showcardsonHand() { this->card_on_hand->display_cards(); }
+void Player::set_deck(Deck* D) { this->card_on_hand->set_deck(D); }
 
 void Player::add_territory(Territory* x) { this->controlled.push_back(x); x->set_owner(this);}
 
@@ -173,6 +174,7 @@ void Player::fortify() {
 		this->fortification = new Fortification(*this);
 
 	this->fortification->fortificate();
+	this->card_on_hand->add_card_on_hand();
 }
 
 vector<Territory*>& Player::get_own_territories() {
@@ -377,4 +379,9 @@ void Player::fortify_strongest() {
 	strongest_neighbor->set_troops(1);
 	strongest->set_troops(strongest->get_troops() + strongest_neighbor_troops - 1);
 	cout << strongest->get_name() << " has been fortified with " << strongest_neighbor_troops - 1 << " more armies." << endl;
+}
+
+//checking cards on hand if exchange
+int Player::check_hand() {
+	return this->card_on_hand->reinforcementcheck();
 }
