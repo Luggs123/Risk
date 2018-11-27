@@ -450,7 +450,7 @@ void Player::fotifyRandom() {
 			int moveNum = rand() % (fortifyFrom->getTroops() - 1) + 1;
 			fortifyFrom->setTroops(fortifyFrom->getTroops() - moveNum);
 			temp->setTroops(temp->getTroops() + moveNum);
-			cout << "Random fortification: "<< "Moved" << endl << moveNum << " armies " << temp->getName() << " from " << fortifyFrom->getName() << endl;
+			cout << "Random fortification: " << endl << "Moved " << moveNum << " armies to " << temp->getName() << " from " << fortifyFrom->getName() << endl;
 		}
 	}
 }
