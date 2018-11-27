@@ -1,3 +1,5 @@
+// Assignment 4 by Ma,Ke.
+
 #include <iostream>
 #include "../Player/Player.h"
 #include "Random.h"
