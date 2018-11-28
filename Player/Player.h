@@ -72,4 +72,9 @@ public:
 	void reinforce_strongest();
 	void attack_with_strongest();
 	void fortify_strongest();
+	
+	// Random strategy:
+	void reinforceRandom();
+	void attackRandom();
+	void fotifyRandom();
 };
