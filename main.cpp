@@ -15,7 +15,8 @@ int main() {
 //    driver::benevolent_strategy_driver();
 //    driver::aggressive_strategy_driver();
 //    driver::human_strategy_driver();
-    driver::phase_observer_driver();
+//    driver::phase_observer_driver();
 //    driver::game_statics_observer_driver();
+	driver::cheater_strategy_driver();
     return 0;
 }

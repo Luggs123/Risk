@@ -69,6 +69,7 @@ public:
 
     void reinforceToWeak();
 
+	// Aggressive Strategy
 	void reinforce_strongest();
 	void attack_with_strongest();
 	void fortify_strongest();
@@ -77,4 +78,9 @@ public:
 	void reinforceRandom();
 	void attackRandom();
 	void fotifyRandom();
+
+	// Cheater Strategy
+	void cheat_reinforce();
+	void cheat_attack();
+	void cheat_fortify();
 };

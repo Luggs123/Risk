@@ -479,3 +479,38 @@ void Player::fotifyRandom() {
 		}
 	}
 }
+
+void Player::cheat_reinforce() {
+	for (Territory* t : this->get_own_territories()) {
+		t->set_troops(t->get_troops() * 2);
+	}
+
+	cout << "All owned armies have doubled in size." << endl;
+}
+
+void Player::cheat_attack() {
+	for (Territory* t : this->get_own_territories()) {
+		for (Territory* n : t->get_neighbors()) {
+			if (n->get_owner() != this) {
+				cout << "Captured " << n->get_name() << "." << endl;
+				n->set_owner(this);
+				this->add_territory(n);
+			}
+		}
+	}
+}
+
+void Player::cheat_fortify() {
+	for (Territory* t : this->get_own_territories()) {
+		bool border_enemy = false;
+		for (Territory* n : t->get_neighbors()) {
+			if (n->get_owner() != this) {
+				border_enemy = true;
+				break;
+			}
+		}
+		if (border_enemy) {
+			t->set_troops(t->get_troops() * 2);
+		}
+	}
+}
