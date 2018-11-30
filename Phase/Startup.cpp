@@ -98,6 +98,44 @@ void Startup::assign_armies(vector<Player*> &players)
     }
 }
 
+void Startup::assign_armies_for_tournament(vector<Player *> &players) {
+    int armies = 0;
+    switch (players.size()) {
+        case 2:
+            armies = 40;
+            break;
+        case 3:
+            armies = 35;
+            break;
+        case 4:
+            armies = 30;
+            break;
+        case 5:
+            armies = 25;
+            break;
+        case 6:
+            armies = 20;
+            break;
+        default:
+            cout << "Invalid number of players." << endl;
+    }
+
+    for (auto &player : players) {
+        player->set_free_troops(armies);
+    }
+
+    for (auto &player : players) {
+        int index = 0;
+        while (player->get_free_troops() > 0) {
+            player->add_troops(index, 1);
+            if (index == player->get_own_territories().size() - 1)
+                index = 0;
+            else
+                index++;
+        }
+    }
+}
+
 /**
  * Initiate the startup phase of the game
  * @param players
@@ -111,4 +149,13 @@ void Startup::execute_startup_phase(vector<Player*> &players, vector<Territory*>
     Startup::generate_order_of_play(players, generator);
     Startup::assign_countries(players, territories, generator);
     Startup::assign_armies(players);
+}
+
+void Startup::execute_startup_phase_for_tournament(vector<Player *> &players, vector<Territory *> &territories) {
+    unsigned int seed = (unsigned int)chrono::system_clock::now().time_since_epoch().count();
+    default_random_engine generator(seed);
+
+    Startup::generate_order_of_play(players, generator);
+    Startup::assign_countries(players, territories, generator);
+    Startup::assign_armies_for_tournament(players);
 }

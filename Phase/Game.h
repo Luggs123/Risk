@@ -19,6 +19,7 @@ private:
 
 public:
     static void execute_main_game_loop(vector<Player*> &players, vector<Territory*> &territories); // initiate the main game loop
+    static string execute_main_game_loop_for_tournament(vector<Player*> &players, vector<Territory*> &territories, int turns_limit);
 };
 
 #endif //RISK_GAME_H

@@ -2,6 +2,9 @@
 // Written by Michael Luger, 40055539
 
 #include "Start.h"
+#include "../PlayerStrategy/Aggressive.h"
+#include "../PlayerStrategy/Random.h"
+#include "../PlayerStrategy/Benevolent.h"
 
 using namespace std;
 
@@ -39,6 +42,38 @@ Payload* Start::start(string path, int players) {
     Deck* deck = new Deck(*territories);
 
     return new Payload(game_map, playerVector, deck);
+}
+
+Payload* Start::start_tournament(std::string path, vector<string*>* players) {
+    MapLoader ml;
+    Map* game_map = ml.get_map(path);
+
+    vector<Player*>* player_vector = new vector<Player*>();
+    for (string* player : *(players)) {
+        Player* player_model = new Player(*player);
+
+        if (*player == "Aggressive") {
+            player_model->setStrategy(new Aggressive());
+        } else if (*player == "Benevolent") {
+            player_model->setStrategy(new Benevolent());
+        } else if (*player == "Random") {
+            player_model->setStrategy(new Random());
+        } else if (*player == "Cheater") {
+            //TODO: missing cheater
+        } else {
+            cout << "Undefined player strategy." << endl;
+        }
+        player_vector->push_back(player_model);
+    }
+
+    vector<string>* territories = new vector<string>();
+    for (Territory* t : game_map->territories) {
+        territories->push_back(t->get_name());
+    }
+
+    Deck* deck = new Deck(*territories);
+
+    return new Payload(game_map, player_vector, deck);
 }
 
 Payload* Start::prompt_start() {

@@ -37,3 +37,33 @@ void Game::execute_main_game_loop(vector<Player*> &players, vector<Territory*> &
 
     cout << "Player " << winner_id << " won!" << endl;
 }
+
+string Game::execute_main_game_loop_for_tournament(vector<Player *> &players, vector<Territory *> &territories, int turns_limit) {
+    bool game_continue = true;
+    int current_turn = 1;
+    string winner_id;
+
+    do {
+        for (auto &player : players) {
+            string player_id = player->getPID();
+
+            if (player->get_own_territories().size() == territories.size()) {
+                winner_id = player_id;
+                game_continue = false;
+                break;
+            }
+
+            if (current_turn > turns_limit) {
+                winner_id = "Draw";
+                game_continue = false;
+                break;
+            }
+
+            player->executeStrategy();
+        }
+
+        current_turn++;
+    } while (game_continue);
+
+    return winner_id;
+}

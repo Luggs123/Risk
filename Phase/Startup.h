@@ -23,9 +23,11 @@ private:
     static void generate_order_of_play(vector<Player*> &players, default_random_engine &generator); // determines the order of play
     static void assign_countries(vector<Player*> &players, vector<Territory*> &territories, default_random_engine &generator); // randomly assigns all country to each players
     static void assign_armies(vector<Player*> &players); // assigns the number of armies depending on the number of players
+    static void assign_armies_for_tournament(vector<Player*> &players);
 
 public:
     static void execute_startup_phase(vector<Player*> &players, vector<Territory*> &territories); // initiate the startup phase
+    static void execute_startup_phase_for_tournament(vector<Player*> &players, vector<Territory*> &territories);
 };
 
 #endif //RISK_STARTUP_H

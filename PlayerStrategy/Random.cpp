@@ -7,8 +7,8 @@
 
 void Random::execute(Player* p) {
 	cout << "************************Random strategy executed.**************************" << endl;
-	cout << "Random Player " << p->getId() << " now own the following:" << endl;
-	p->showTerritory();
+	cout << "Random Player " << p->getPID() << " now own the following:" << endl;
+	p->show_territory();
 	cout <<endl<< "------------------------------------------------" << endl;
 	p->reinforceRandom();
 	cout << "------------------------------------------------" << endl;

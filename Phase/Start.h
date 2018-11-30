@@ -17,6 +17,7 @@ private:
     Start() { }
 public:
     static Payload* start(std::string path, int players);
+    static Payload* start_tournament(std::string path, vector<string*>* players);
     static Payload* prompt_start();
 };
 
