@@ -394,8 +394,8 @@ void Player::reinforceRandom() {
 		num = rand() % num;
 		Territory* temp = controlled[num];
 		cout << "Random reniforcement. " << endl;
-		temp->setTroops((controlled.size() / 3) + temp->getTroops());
-		cout << "Reinforced " << (controlled.size() / 3) << " army to " << temp->getName() << endl;
+		temp->set_troops((controlled.size() / 3) + temp->get_troops());
+		cout << "Reinforced " << (controlled.size() / 3) << " army to " << temp->get_name() << endl;
 	}
 }
 
@@ -408,20 +408,20 @@ void Player::attackRandom() {
 		num = rand() % num;
 		Territory* att = controlled[num];
 		vector<Territory*> enemy;
-		for (int i = 0; i < att->getNeighbors().size(); i++)
-			if (att->getNeighbors()[i]->getOwner()->getId() == PlayerID)
-				enemy.push_back(att->getNeighbors()[i]);
+		for (int i = 0; i < att->get_neighbors().size(); i++)
+			if (att->get_neighbors()[i]->get_owner()->getPID() == this->player_id)
+				enemy.push_back(att->get_neighbors()[i]);
 		int flag = 0;
 		do
 		{
 
-		if ((enemy.size() != 0)&&(att->getTroops()>1)) {
+		if ((enemy.size() != 0)&&(att->get_troops()>1)) {
 			Territory* def = enemy[rand() % enemy.size()];
 			int attNum, defNum;
-			if (att->getTroops()<=3) attNum = rand() % (att->getTroops() - 1) + 1; else attNum = rand() % 3 + 1;
-			if (def->getTroops() < 2)  defNum = 1; else defNum = rand() % 2 + 1;
+			if (att->get_troops()<=3) attNum = rand() % (att->get_troops() - 1) + 1; else attNum = rand() % 3 + 1;
+			if (def->get_troops() < 2)  defNum = 1; else defNum = rand() % 2 + 1;
 			cout << "------------------------------------------------" << endl;
-			cout << "Random attacking :" << att->getName() << " ->> " << def->getName() << endl;
+			cout << "Random attacking :" << att->get_name() << " ->> " << def->get_name() << endl;
 			Dice attDice, defDice;
 
 			attDice.roll(attNum);
@@ -431,19 +431,19 @@ void Player::attackRandom() {
 
 			for (int i = 0; i < 3; i++) {
 				if ((attDice.currentResult[i] != 0) && (defDice.currentResult[i] != 0))
-					if ((attDice.currentResult[i]) > (defDice.currentResult[i])) def->setTroops(def->getTroops() - 1);
-					else if ((attDice.currentResult[i]) == (defDice.currentResult[i])) att->setTroops(att->getTroops() - 1);
-					else (att->setTroops(att->getTroops() - 1));
+					if ((attDice.currentResult[i]) > (defDice.currentResult[i])) def->set_troops(def->get_troops() - 1);
+					else if ((attDice.currentResult[i]) == (defDice.currentResult[i])) att->set_troops(att->get_troops() - 1);
+					else (att->set_troops(att->get_troops() - 1));
 			}
 
-			cout << "Attacking finished." << endl << "The attacting country " << att->getName() << " now has " << att->getTroops() << " armies." << endl
-				<< "The defending country " << def->getName() << " now has " << def->getTroops() << " armies." << endl;
+			cout << "Attacking finished." << endl << "The attacting country " << att->get_name() << " now has " << att->get_troops() << " armies." << endl
+				<< "The defending country " << def->get_name() << " now has " << def->get_troops() << " armies." << endl;
 			cout << "------------------------------------------------" << endl;
 
-			if (def->getTroops() == 0) { // if defender has 0 arrmy, cannot attack again, break the loop.
-				cout << "Defending country " << def->getName() << " has no army now, it now belongs to " << att->getOwner()->getId() << endl;
-				def->setOwner(att->getOwner());
-				this->addTerritory(def);
+			if (def->get_troops() == 0) { // if defender has 0 arrmy, cannot attack again, break the loop.
+				cout << "Defending country " << def->get_name() << " has no army now, it now belongs to " << att->get_owner()->getPID() << endl;
+				def->set_owner(att->get_owner());
+				this->add_territory(def);
 				break;
 			}
 			else {
@@ -467,15 +467,15 @@ void Player::fotifyRandom() {
 		num = rand() % num;
 		Territory* temp = controlled[num];
 		vector<Territory*> ally;
-		for (int i = 0; i < temp->getNeighbors().size(); i++)
-			if (temp->getNeighbors()[i]->getOwner()->getId() == PlayerID)
-				ally.push_back(temp->getNeighbors()[i]);
+		for (int i = 0; i < temp->get_neighbors().size(); i++)
+			if (temp->get_neighbors()[i]->get_owner()->getPID() == this->player_id)
+				ally.push_back(temp->get_neighbors()[i]);
 		if (ally.size() != 0) {
 			Territory* fortifyFrom = ally[rand() % ally.size()];
-			int moveNum = rand() % (fortifyFrom->getTroops() - 1) + 1;
-			fortifyFrom->setTroops(fortifyFrom->getTroops() - moveNum);
-			temp->setTroops(temp->getTroops() + moveNum);
-			cout << "Random fortification: " << endl << "Moved " << moveNum << " armies to " << temp->getName() << " from " << fortifyFrom->getName() << endl;
+			int moveNum = rand() % (fortifyFrom->get_troops() - 1) + 1;
+			fortifyFrom->set_troops(fortifyFrom->get_troops() - moveNum);
+			temp->set_troops(temp->get_troops() + moveNum);
+			cout << "Random fortification: " << endl << "Moved " << moveNum << " armies to " << temp->get_name() << " from " << fortifyFrom->get_name() << endl;
 		}
 	}
 }
