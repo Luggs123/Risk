@@ -194,14 +194,16 @@ void Player::fight(Territory* att, Territory* def) {
     notify(GamePhase::ATTACK, &data_str);
 	int attNum = -1;
 	int	defNum = -1;
+	int atk_roll = 3;
 	for (;;) {
 //		cout << "choice number of dice to roll (attacker), repeat if the number is invalid" << endl;
-		int temp = 1; // automated
+		int temp = atk_roll; // automated
 //		cin >> temp; cout << endl;
 		int tp=att->get_troops() - 1;
 		if (tp >= temp)
 			if ((temp >= 1) && (temp <= 3)) { attNum = temp; break; }
 
+		atk_roll--;
 	}
 	for (;;) {
 //		cout << "choice number of dice to roll (defender), repeat if the number is invalid" << endl;
@@ -461,7 +463,7 @@ void Player::attackRandom() {
 }
 
 void Player::fotifyRandom() {
-	if (controlled.size() == 0) cout << "This player now own 0 country, fortification failed." << endl;
+	if (controlled.size() <= 1) cout << "This player now own 0 country, fortification failed." << endl;
 	else {
 		int num = this->controlled.size();
 		num = rand() % num;

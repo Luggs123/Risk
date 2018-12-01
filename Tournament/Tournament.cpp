@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+#include <iomanip>
 
 #include "Tournament.h"
 #include "../Phase/Payload.h"
@@ -206,12 +207,45 @@ vector<string*>* Tournament::prompt_computer_players() {
 }
 
 void Tournament::execute_tournament(Configuration *config) {
+    vector<vector<string>> results;
+
     for (int i = 0; i < config->get_num_of_maps(); i++) {
-        string path = "../MapTemplates/" + *(config->get_maps()->at(i));
-        Payload* payload = Start::start_tournament(path, config->get_players());
-        Startup::execute_startup_phase_for_tournament(payload->get_players(), payload->get_map().territories);
-        string result = Game::execute_main_game_loop_for_tournament(payload->get_players(), payload->get_map().territories, config->get_num_of_turns());
-        cout << "Winner: " << result << endl;
+        vector<string> current_map_results;
+
+        for (int j = 0; j < config->get_num_of_games(); j++) {
+            string path = "../MapTemplates/" + *(config->get_maps()->at(i));
+            Payload *payload = Start::start_tournament(path, config->get_players());
+            Startup::execute_startup_phase_for_tournament(payload->get_players(), payload->get_map().territories);
+            string result = Game::execute_main_game_loop_for_tournament(payload->get_players(),
+                                                                        payload->get_map().territories,
+                                                                        config->get_num_of_turns());
+            current_map_results.push_back(result);
+        }
+
+        results.push_back(current_map_results);
+    }
+
+    const char delimiter = ' ';
+
+    for (int i = 0; i <= config->get_num_of_games(); i++) {
+        if (i == 0) {
+            cout << left << setw(20) << setfill(' ') << "Maps";
+        } else {
+            string col_name = "Game " + to_string(i);
+            cout << left << setw(20) << setfill(' ') << col_name;
+        }
+    }
+
+    cout << endl;
+
+    for (int i = 0; i < config->get_num_of_maps(); i++) {
+        cout << left << setw(20) << setfill(delimiter) << *(config->get_maps()->at(i));
+
+        for (int j = 0; j < config->get_num_of_games(); j++) {
+            cout << left << setw(20) << setfill(delimiter) << results[i][j];
+        }
+
+        cout << endl;
     }
 }
 
