@@ -411,7 +411,11 @@ void Player::attackRandom() {
 		Territory* att = controlled[num];
 		vector<Territory*> enemy;
 		for (int i = 0; i < att->get_neighbors().size(); i++)
+<<<<<<< HEAD
 			if (att->get_neighbors()[i]->get_owner()->getPID() == player_id)
+=======
+			if (att->get_neighbors()[i]->get_owner()->getPID() == this->player_id)
+>>>>>>> 14dddbda4236df322884ceedd4e2dbfe496b8e63
 				enemy.push_back(att->get_neighbors()[i]);
 		int flag = 0;
 		do
@@ -443,7 +447,7 @@ void Player::attackRandom() {
 			cout << "------------------------------------------------" << endl;
 
 			if (def->get_troops() == 0) { // if defender has 0 arrmy, cannot attack again, break the loop.
-				cout << "Defending country " << def->get_name() << " has no army now, it now belongs to " << att->get_owner() << endl;
+				cout << "Defending country " << def->get_name() << " has no army now, it now belongs to " << att->get_owner()->getPID() << endl;
 				def->set_owner(att->get_owner());
 				this->add_territory(def);
 				break;
@@ -470,7 +474,7 @@ void Player::fotifyRandom() {
 		Territory* temp = controlled[num];
 		vector<Territory*> ally;
 		for (int i = 0; i < temp->get_neighbors().size(); i++)
-			if (temp->get_neighbors()[i]->get_owner()->getPID() == player_id)
+			if (temp->get_neighbors()[i]->get_owner()->getPID() == this->player_id)
 				ally.push_back(temp->get_neighbors()[i]);
 		if (ally.size() != 0) {
 			Territory* fortifyFrom = ally[rand() % ally.size()];
@@ -478,6 +482,41 @@ void Player::fotifyRandom() {
 			fortifyFrom->set_troops(fortifyFrom->get_troops() - moveNum);
 			temp->set_troops(temp->get_troops() + moveNum);
 			cout << "Random fortification: " << endl << "Moved " << moveNum << " armies to " << temp->get_name() << " from " << fortifyFrom->get_name() << endl;
+		}
+	}
+}
+
+void Player::cheat_reinforce() {
+	for (Territory* t : this->get_own_territories()) {
+		t->set_troops(t->get_troops() * 2);
+	}
+
+	cout << "All owned armies have doubled in size." << endl;
+}
+
+void Player::cheat_attack() {
+	for (Territory* t : this->get_own_territories()) {
+		for (Territory* n : t->get_neighbors()) {
+			if (n->get_owner() != this) {
+				cout << "Captured " << n->get_name() << "." << endl;
+				n->set_owner(this);
+				this->add_territory(n);
+			}
+		}
+	}
+}
+
+void Player::cheat_fortify() {
+	for (Territory* t : this->get_own_territories()) {
+		bool border_enemy = false;
+		for (Territory* n : t->get_neighbors()) {
+			if (n->get_owner() != this) {
+				border_enemy = true;
+				break;
+			}
+		}
+		if (border_enemy) {
+			t->set_troops(t->get_troops() * 2);
 		}
 	}
 }

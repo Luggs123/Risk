@@ -23,6 +23,7 @@ namespace driver {
 	int phase_observer_driver();
 	int game_statics_observer_driver();
 	int tournament_driver();
+	int cheater_strategy_driver();
 }
 
 #endif //RISK_DRIVER_H
