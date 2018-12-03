@@ -6,8 +6,8 @@
 
 #include <iostream>
 #include <string>
-#include "../INCLUDE/dirent.h"
-
+//#include "../INCLUDE/dirent.h"
+#include "dirent.h"
 #include "../Map/MapLoader.h"
 #include "../View/View.h"
 #include "Payload.h"

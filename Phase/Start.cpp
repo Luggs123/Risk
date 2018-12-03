@@ -5,6 +5,7 @@
 #include "../PlayerStrategy/Aggressive.h"
 #include "../PlayerStrategy/Random.h"
 #include "../PlayerStrategy/Benevolent.h"
+#include "../PlayerStrategy/Cheater.h"
 
 using namespace std;
 
@@ -59,7 +60,7 @@ Payload* Start::start_tournament(std::string path, vector<string*>* players) {
         } else if (*player == "Random") {
             player_model->setStrategy(new Random());
         } else if (*player == "Cheater") {
-            //TODO: missing cheater
+            player_model->setStrategy(new Cheater());
         } else {
             cout << "Undefined player strategy." << endl;
         }

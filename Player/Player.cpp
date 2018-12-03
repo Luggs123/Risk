@@ -411,11 +411,7 @@ void Player::attackRandom() {
 		Territory* att = controlled[num];
 		vector<Territory*> enemy;
 		for (int i = 0; i < att->get_neighbors().size(); i++)
-<<<<<<< HEAD
-			if (att->get_neighbors()[i]->get_owner()->getPID() == player_id)
-=======
 			if (att->get_neighbors()[i]->get_owner()->getPID() == this->player_id)
->>>>>>> 14dddbda4236df322884ceedd4e2dbfe496b8e63
 				enemy.push_back(att->get_neighbors()[i]);
 		int flag = 0;
 		do
