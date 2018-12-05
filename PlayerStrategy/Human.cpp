@@ -12,6 +12,7 @@ using namespace std;
 void Human::execute(Player* p) {
 	cout << "Human strategy executed." << endl;
 	cout << "Player " << p->getPID() << " currently owns the following:" << endl;
+	cout << "Count: " << p->get_own_territories().size() << endl;
 	p->show_territory();
 	cout << endl;
 

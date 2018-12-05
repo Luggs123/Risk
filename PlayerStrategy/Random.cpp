@@ -15,5 +15,4 @@ void Random::execute(Player* p) {
 	p->attackRandom();
 	p->fotifyRandom();
 	cout << "------------------------------------------------" << endl;
-
 }

@@ -236,8 +236,11 @@ void Player::fight(Territory* att, Territory* def) {
 
 	if (def->get_troops() == 0) {
 		cout << "Defending country " << def->get_name() << " has no army now, it now belongs to "<<att->get_owner()->getPID()<<endl;
+		def->get_owner()->lose_territory(def);
 		def->set_owner(att->get_owner());
 		this->add_territory(def);
+		def->set_troops(att->get_troops() - 1);
+		att->set_troops(1);
 	}
 
 }
@@ -283,8 +286,12 @@ void Player::reinforceToWeak() {
         for (int i = 0; i < controlled.size(); i++)
             if (controlled[i]->get_troops() < num) weakest = controlled[i];
         cout << "Now performing a reinforcement........" << endl;
-        weakest->set_troops((controlled.size() / 3) + weakest->get_troops());
-        cout << "Reinforced " << (controlled.size() / 3) << " army to " << weakest->get_name() << endl;
+		int free_troops = controlled.size() / 3 ;
+		if (free_troops < 3) {
+			free_troops = 3;
+		}
+        weakest->set_troops(free_troops + weakest->get_troops());
+        cout << "Reinforced " << (free_troops) << " army to " << weakest->get_name() << endl;
 
         num = controlled[0]->get_troops();
         for (int i = 0; i < controlled.size(); i++)
@@ -326,8 +333,12 @@ void Player::reinforce_strongest() {
 			strongest = t;
 		}
 	}
-	strongest->set_troops(controlled.size() / 3 + strongest->get_troops());
-	cout << strongest->get_name() << " reinforced with " << controlled.size() / 3 << " armies." << endl;
+	int free_troops = controlled.size() / 3 ;
+	if (free_troops < 3) {
+		free_troops = 3;
+	}
+	strongest->set_troops(free_troops + strongest->get_troops());
+	cout << strongest->get_name() << " reinforced with " << free_troops << " armies." << endl;
 }
 
 // Uses strongest territory to attack an unowned target until it cannot anymore
@@ -370,7 +381,7 @@ void Player::fortify_strongest() {
 	}
 
 	Territory* strongest_neighbor;
-	int strongest_neighbor_troops = 0;
+	int strongest_neighbor_troops = 1;
 	for (Territory* n : strongest->get_neighbors()) {
 		if (n->get_owner() == this && n->get_troops() > strongest_neighbor_troops) {
 			strongest_neighbor = n;
@@ -474,10 +485,13 @@ void Player::fotifyRandom() {
 				ally.push_back(temp->get_neighbors()[i]);
 		if (ally.size() != 0) {
 			Territory* fortifyFrom = ally[rand() % ally.size()];
-			int moveNum = rand() % (fortifyFrom->get_troops() - 1) + 1;
-			fortifyFrom->set_troops(fortifyFrom->get_troops() - moveNum);
-			temp->set_troops(temp->get_troops() + moveNum);
-			cout << "Random fortification: " << endl << "Moved " << moveNum << " armies to " << temp->get_name() << " from " << fortifyFrom->get_name() << endl;
+			if (fortifyFrom->get_troops() > 1) {
+                int moveNum = rand() % (fortifyFrom->get_troops() - 1) + 1;
+                fortifyFrom->set_troops(fortifyFrom->get_troops() - moveNum);
+                temp->set_troops(temp->get_troops() + moveNum);
+                cout << "Random fortification: " << endl << "Moved " << moveNum << " armies to " << temp->get_name()
+                     << " from " << fortifyFrom->get_name() << endl;
+            }
 		}
 	}
 }
@@ -491,10 +505,12 @@ void Player::cheat_reinforce() {
 }
 
 void Player::cheat_attack() {
-	for (Territory* t : this->get_own_territories()) {
-		for (Territory* n : t->get_neighbors()) {
+    int size = this->controlled.size();
+	for (int i = 0; i < size; i++) {
+		for (Territory* n : this->controlled[i]->get_neighbors()) {
 			if (n->get_owner() != this) {
 				cout << "Captured " << n->get_name() << "." << endl;
+				n->get_owner()->lose_territory(n);
 				n->set_owner(this);
 				this->add_territory(n);
 			}

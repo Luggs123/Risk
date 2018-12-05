@@ -10,9 +10,11 @@ using namespace std;
 void Aggressive::execute(Player* p) {
 	cout << "Aggressive strategy executed." << endl;
 	cout << "Player " << p->getPID() << " currently owns the following:" << endl;
+	cout << "Count: " << p->get_own_territories().size() << endl;
 	p->show_territory();
 	cout << endl;
 	p->reinforce_strongest();
 	p->attack_with_strongest();
 	p->fortify_strongest();
+	cout << "Count: " << p->get_own_territories().size() << endl;
 }

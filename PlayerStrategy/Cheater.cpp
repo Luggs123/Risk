@@ -10,9 +10,11 @@ using namespace std;
 void Cheater::execute(Player* p) {
 	cout << "Cheater strategy executed." << endl;
 	cout << "Player " << p->getPID() << " currently owns the following:" << endl;
+	cout << "Count: " << p->get_own_territories().size() << endl;
 	p->show_territory();
 	cout << endl;
 	p->cheat_reinforce();
 	p->cheat_attack();
 	p->cheat_fortify();
+	cout << "Count: " << p->get_own_territories().size() << endl;
 }
