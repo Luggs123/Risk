@@ -489,9 +489,9 @@ void Player::cheat_reinforce() {
 }
 
 void Player::cheat_attack() {
-	for (Territory* t : this->get_own_territories()) {
-		for (Territory* n : t->get_neighbors()) {
-			if (n->get_owner() != this) {
+	for (int i = 0; i < this->controlled.size(); i++) {
+		for (Territory* n : controlled[i]->get_neighbors()) {
+			if (n->get_owner()->getPID() != this->getPID()) {
 				cout << "Captured " << n->get_name() << "." << endl;
 				n->set_owner(this);
 				this->add_territory(n);

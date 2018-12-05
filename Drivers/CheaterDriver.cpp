@@ -4,6 +4,7 @@
 #include "../Player/Player.h"
 #include "../Map/Map.h"
 #include "../PlayerStrategy/Cheater.h"
+#include "../Deck/Deck.h"
 #include "Driver.h"
 
 using namespace std;
@@ -48,6 +49,21 @@ int driver::cheater_strategy_driver() {
 	p2->add_territory(ger);
 	p2->add_territory(uk);
 	p2->add_territory(cn);
+
+	std::vector<std::string>* territory_list = new std::vector<std::string>();
+	territory_list->push_back(ca->get_name());
+	territory_list->push_back(usa->get_name());
+	territory_list->push_back(sp->get_name());
+	territory_list->push_back(fr->get_name());
+	territory_list->push_back(me->get_name());
+	territory_list->push_back(ger->get_name());
+	territory_list->push_back(uk->get_name());
+	territory_list->push_back(cn->get_name());
+
+	Deck* deck = new Deck(*territory_list);
+
+	p1->set_deck(deck);
+	p2->set_deck(deck);
 
 	cout << "--------------------------";
 	cout << "Testing for 2 players";
